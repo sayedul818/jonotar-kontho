@@ -83,12 +83,12 @@ const Index = () => {
           {/* Main Content */}
           <div className="lg:col-span-3 space-y-8">
             {/* Hero Section */}
-            <section className="fade-in">
+            <section className="animate-in fade-in duration-500">
               <HeroSlider />
             </section>
 
             {/* Latest News */}
-            <section className="slide-in">
+            <section className="animate-in slide-in-from-bottom-4 duration-300">
               <h2 className="news-headline mb-6 text-primary">সর্বশেষ সংবাদ</h2>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {latestNews.map((news, index) => (
@@ -107,7 +107,7 @@ const Index = () => {
             </section>
 
             {/* Category Tabs */}
-            <section className="slide-in">
+            <section className="animate-in slide-in-from-bottom-4 duration-300 delay-150">
               <Tabs defaultValue="national" className="w-full">
                 <TabsList className="grid w-full grid-cols-4 mb-6">
                   <TabsTrigger value="national">জাতীয়</TabsTrigger>

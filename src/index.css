@@ -136,14 +136,6 @@ All colors MUST be HSL.
   }
 
   /* Animations */
-  .slide-in {
-    @apply animate-in slide-in-from-bottom-4 duration-300;
-  }
-  
-  .fade-in {
-    @apply animate-in fade-in duration-500;
-  }
-  
   .hover-lift {
     @apply transition-all duration-200 hover:shadow-lg hover:-translate-y-1;
   }
