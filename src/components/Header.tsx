@@ -2,20 +2,21 @@ import { Search, Menu, Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const navItems = [
-    "Home",
-    "National", 
-    "International",
-    "Business",
-    "Sports", 
-    "Entertainment",
-    "Technology",
-    "Opinion",
-    "Lifestyle"
+    { name: "Home", path: "/" },
+    { name: "National", path: "/national" }, 
+    { name: "International", path: "/international" },
+    { name: "Business", path: "/business" },
+    { name: "Sports", path: "/sports" }, 
+    { name: "Entertainment", path: "/entertainment" },
+    { name: "Technology", path: "/technology" },
+    { name: "Opinion", path: "/opinion" },
+    { name: "Lifestyle", path: "/lifestyle" }
   ];
 
   return (
@@ -49,13 +50,13 @@ const Header = () => {
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-6">
             {navItems.map((item) => (
-              <a
-                key={item}
-                href="#"
+              <Link
+                key={item.name}
+                to={item.path}
                 className="text-foreground hover:text-primary transition-colors font-medium"
               >
-                {item}
-              </a>
+                {item.name}
+              </Link>
             ))}
           </nav>
 
@@ -87,13 +88,13 @@ const Header = () => {
           <nav className="lg:hidden mt-4 pb-4 border-t border-border">
             <div className="grid grid-cols-2 gap-2 mt-4">
               {navItems.map((item) => (
-                <a
-                  key={item}
-                  href="#"
+                <Link
+                  key={item.name}
+                  to={item.path}
                   className="text-foreground hover:text-primary transition-colors font-medium py-2 px-3 rounded-md hover:bg-muted"
                 >
-                  {item}
-                </a>
+                  {item.name}
+                </Link>
               ))}
             </div>
             <div className="mt-4">
