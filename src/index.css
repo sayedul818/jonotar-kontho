@@ -8,33 +8,47 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
+    /* News Website Color System */
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 220 15% 20%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 220 15% 20%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 220 15% 20%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    /* Primary: Deep Blue - Trust & Authority */
+    --primary: 220 70% 25%;
+    --primary-foreground: 0 0% 98%;
+    --primary-hover: 220 70% 20%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Secondary: Light Red - Breaking News */
+    --secondary: 0 65% 70%;
+    --secondary-foreground: 0 0% 98%;
+    --secondary-hover: 0 65% 60%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Accent: Golden Yellow - Highlights */
+    --accent: 43 95% 56%;
+    --accent-foreground: 220 15% 20%;
+    --accent-hover: 43 95% 50%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    /* News specific colors */
+    --breaking: 0 84% 60%;
+    --breaking-foreground: 0 0% 98%;
+    
+    --trending: 43 95% 56%;
+    --trending-foreground: 220 15% 20%;
+
+    --muted: 210 20% 96%;
+    --muted-foreground: 220 10% 50%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 220 70% 25%;
 
     --radius: 0.5rem;
 
@@ -101,5 +115,59 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Inter', 'Roboto', sans-serif;
+  }
+
+  /* Typography Scale */
+  .news-headline {
+    @apply text-2xl md:text-3xl font-bold leading-tight tracking-tight;
+  }
+  
+  .news-title {
+    @apply text-lg md:text-xl font-semibold leading-tight;
+  }
+  
+  .news-subtitle {
+    @apply text-base font-medium leading-relaxed;
+  }
+  
+  .news-body {
+    @apply text-sm leading-relaxed;
+  }
+
+  /* Animations */
+  .slide-in {
+    @apply animate-in slide-in-from-bottom-4 duration-300;
+  }
+  
+  .fade-in {
+    @apply animate-in fade-in duration-500;
+  }
+  
+  .hover-lift {
+    @apply transition-all duration-200 hover:shadow-lg hover:-translate-y-1;
+  }
+
+  /* Breaking News Animation */
+  @keyframes scroll-left {
+    0% { transform: translateX(100%); }
+    100% { transform: translateX(-100%); }
+  }
+  
+  .breaking-scroll {
+    animation: scroll-left 30s linear infinite;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    @apply bg-muted;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    @apply bg-muted-foreground rounded-full;
   }
 }
