@@ -1,6 +1,4 @@
 import { Clock, Eye } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 
 interface NewsCardProps {
   title: string;
@@ -12,52 +10,68 @@ interface NewsCardProps {
   featured?: boolean;
 }
 
-const NewsCard = ({ 
-  title, 
-  excerpt, 
-  image, 
-  category, 
-  time, 
-  views, 
-  featured = false 
-}: NewsCardProps) => {
+const NewsCard = ({ title, excerpt, image, category, time, views, featured = false }: NewsCardProps) => {
+  if (featured) {
+    return (
+      <div className="bg-white border border-gray-200 hover:border-gray-300 transition-all duration-200 cursor-pointer group">
+        <div className="grid lg:grid-cols-2 gap-0">
+          <div className="lg:order-1">
+            <img 
+              src={image} 
+              alt={title}
+              className="w-full h-64 lg:h-80 object-cover"
+            />
+          </div>
+          <div className="p-6 lg:order-2 flex flex-col justify-center">
+            <span className="text-primary text-sm font-medium mb-2 bn-text">{category}</span>
+            <h2 className="text-2xl lg:text-3xl font-bold leading-tight mb-3 group-hover:text-primary transition-colors bn-text">
+              {title}
+            </h2>
+            <p className="text-gray-600 text-base leading-relaxed mb-4 bn-text">
+              {excerpt}
+            </p>
+            <div className="flex items-center text-sm text-gray-500 space-x-4">
+              <div className="flex items-center space-x-1">
+                <Clock className="h-4 w-4" />
+                <span className="bn-text">{time}</span>
+              </div>
+              {views && (
+                <div className="flex items-center space-x-1">
+                  <Eye className="h-4 w-4" />
+                  <span>{views.toLocaleString()}</span>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <Card className={`hover-lift cursor-pointer group ${featured ? 'md:col-span-2 md:row-span-2' : ''}`}>
-      <div className="relative overflow-hidden rounded-t-lg">
+    <div className="bg-white border border-gray-100 hover:border-gray-200 hover:shadow-md transition-all duration-200 cursor-pointer group">
+      <div className="relative">
         <img 
           src={image} 
           alt={title}
-          className={`w-full object-cover transition-transform duration-300 group-hover:scale-105 ${
-            featured ? 'h-64 md:h-80' : 'h-48'
-          }`}
+          className="w-full h-48 object-cover"
         />
-        <Badge 
-          variant="secondary" 
-          className="absolute top-3 left-3 bg-accent text-accent-foreground hover:bg-accent-hover"
-        >
-          {category}
-        </Badge>
+        <div className="absolute top-3 left-3">
+          <span className="bg-primary text-white px-2 py-1 text-xs font-medium bn-text">{category}</span>
+        </div>
       </div>
-      
-      <CardContent className="p-4">
-        <h3 className={`font-bold leading-tight mb-2 group-hover:text-primary transition-colors ${
-          featured ? 'text-xl md:text-2xl' : 'text-lg'
-        }`}>
+      <div className="p-4">
+        <h3 className="font-bold text-lg leading-tight mb-2 group-hover:text-primary transition-colors bn-text">
           {title}
         </h3>
-        
-        <p className={`text-muted-foreground leading-relaxed mb-3 ${
-          featured ? 'text-base' : 'text-sm'
-        }`}>
+        <p className="text-gray-600 text-sm leading-relaxed mb-3 bn-text line-clamp-2">
           {excerpt}
         </p>
-        
-        <div className="flex items-center justify-between text-sm text-muted-foreground">
+        <div className="flex items-center justify-between text-sm text-gray-500">
           <div className="flex items-center space-x-1">
             <Clock className="h-4 w-4" />
-            <span>{time}</span>
+            <span className="bn-text">{time}</span>
           </div>
-          
           {views && (
             <div className="flex items-center space-x-1">
               <Eye className="h-4 w-4" />
@@ -65,8 +79,8 @@ const NewsCard = ({
             </div>
           )}
         </div>
-      </CardContent>
-    </Card>
+      </div>
+    </div>
   );
 };
 

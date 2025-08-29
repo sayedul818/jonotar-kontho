@@ -78,24 +78,19 @@ const National = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gray-50">
       <Header />
       
-      {/* Category Banner */}
-      <section className="bg-gradient-to-r from-primary to-primary/80 text-primary-foreground py-12">
-        <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-2">জাতীয় সংবাদ</h1>
-          <p className="text-primary-foreground/80">দেশের সর্বশেষ জাতীয় সংবাদ ও ঘটনাবলী</p>
-        </div>
-      </section>
-
-      <div className="container mx-auto px-4 py-8">
+      {/* Page Content */}
+      <div className="container mx-auto px-4 py-6">
         <div className="grid lg:grid-cols-4 gap-8">
           {/* Main Content */}
           <div className="lg:col-span-3">
             {/* Featured Story */}
             <section className="mb-8">
-              <h2 className="news-headline mb-6 text-primary">বিশেষ প্রতিবেদন</h2>
+              <h1 className="text-2xl font-bold mb-6 text-foreground bn-text border-b border-primary pb-2">
+                জাতীয়
+              </h1>
               <NewsCard
                 title={nationalNews[0].title}
                 excerpt={nationalNews[0].excerpt}
@@ -109,54 +104,25 @@ const National = () => {
 
             {/* News Grid */}
             <section>
-              <h2 className="news-headline mb-6 text-primary">সর্বশেষ জাতীয় সংবাদ</h2>
               <div className="grid md:grid-cols-2 gap-6 mb-8">
                 {nationalNews.slice(1).map((news) => (
-                  <div key={news.id} className="border border-border rounded-lg p-4 hover-lift">
-                    <img 
-                      src={news.image} 
-                      alt={news.title}
-                      className="w-full h-48 object-cover rounded-lg mb-4"
-                    />
-                    <Badge variant="secondary" className="mb-2">
-                      {news.category}
-                    </Badge>
-                    <h3 className="text-lg font-bold mb-2 hover:text-primary transition-colors">
-                      {news.title}
-                    </h3>
-                    <p className="text-muted-foreground text-sm mb-3">
-                      {news.excerpt}
-                    </p>
-                    <div className="flex items-center justify-between text-sm text-muted-foreground mb-3">
-                      <div className="flex items-center space-x-4">
-                        <div className="flex items-center space-x-1">
-                          <User className="h-4 w-4" />
-                          <span>{news.author}</span>
-                        </div>
-                        <div className="flex items-center space-x-1">
-                          <Clock className="h-4 w-4" />
-                          <span>{news.time}</span>
-                        </div>
-                      </div>
-                      <div className="flex items-center space-x-1">
-                        <Eye className="h-4 w-4" />
-                        <span>{news.views.toLocaleString()}</span>
-                      </div>
-                    </div>
-                    <Button variant="outline" size="sm">
-                      বিস্তারিত পড়ুন
-                    </Button>
-                  </div>
+                  <NewsCard
+                    key={news.id}
+                    title={news.title}
+                    excerpt={news.excerpt}
+                    image={news.image}
+                    category={news.category}
+                    time={news.time}
+                    views={news.views}
+                  />
                 ))}
               </div>
 
-              {/* Pagination */}
-              <div className="flex justify-center space-x-2">
-                <Button variant="outline" size="sm">পূর্ববর্তী</Button>
-                <Button variant="default" size="sm">১</Button>
-                <Button variant="outline" size="sm">২</Button>
-                <Button variant="outline" size="sm">৩</Button>
-                <Button variant="outline" size="sm">পরবর্তী</Button>
+              {/* Load More */}
+              <div className="text-center">
+                <Button variant="outline" className="bn-text">
+                  আরো সংবাদ লোড করুন
+                </Button>
               </div>
             </section>
           </div>
