@@ -25,12 +25,14 @@ const Header = () => {
     <header className="bg-white shadow-sm sticky top-0 z-50">
       {/* Breaking News Ticker */}
       <div className="bg-primary text-white py-1 px-4 overflow-hidden">
-        <div className="flex items-center">
+        <div className="flex items-center ">
           <span className="text-sm font-semibold mr-4 whitespace-nowrap">আজকের হেডলাইনস:</span>
-          <div className="flex space-x-8 animate-marquee">
+          <div className="relative overflow-hidden w-full">
+           <div className="flex space-x-8 animate-marquee ">
             <span className="text-sm whitespace-nowrap">প্রধানমন্ত্রীর নতুন উন্নয়ন পরিকল্পনা ঘোষণা</span>
             <span className="text-sm whitespace-nowrap">শিক্ষা ব্যবস্থায় আমূল সংস্কারের উদ্যোগ</span>
             <span className="text-sm whitespace-nowrap">স্বাস্থ্যসেবায় ডিজিটাল বিপ্লব</span>
+           </div>
           </div>
         </div>
       </div>
@@ -42,7 +44,7 @@ const Header = () => {
             {/* Logo */}
             <Link to="/" className="flex items-center">
               <h1 className="text-3xl font-bold text-primary bn-text">
-                প্রথম<span className="text-red-600">আলো</span>
+                জনতার<span className="text-red-600"> কন্ঠ</span>
               </h1>
             </Link>
 

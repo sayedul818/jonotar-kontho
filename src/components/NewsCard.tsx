@@ -13,21 +13,21 @@ interface NewsCardProps {
 const NewsCard = ({ title, excerpt, image, category, time, views, featured = false }: NewsCardProps) => {
   if (featured) {
     return (
-      <div className="bg-white border border-gray-200 hover:border-gray-300 transition-all duration-200 cursor-pointer group">
-        <div className="grid lg:grid-cols-2 gap-0">
+      <div className=" bg-white border border-gray-200 hover:border-gray-300 transition-all duration-200 cursor-pointer group">
+        <div className=" grid lg:grid-cols-1 gap-0">
           <div className="lg:order-1">
             <img 
               src={image} 
               alt={title}
-              className="w-full h-64 lg:h-80 object-cover"
+              className="w-full h-44 lg:h-52 object-cover"
             />
           </div>
           <div className="p-6 lg:order-2 flex flex-col justify-center">
             <span className="text-primary text-sm font-medium mb-2 bn-text">{category}</span>
-            <h2 className="text-2xl lg:text-3xl font-bold leading-tight mb-3 group-hover:text-primary transition-colors bn-text">
+            <h2 className="text-xl lg:text-3xl font-bold leading-tight mb-3 group-hover:text-primary transition-colors bn-text">
               {title}
             </h2>
-            <p className="text-gray-600 text-base leading-relaxed mb-4 bn-text">
+            <p className="text-gray-600 hidden md:block  text-base leading-relaxed mb-4 bn-text">
               {excerpt}
             </p>
             <div className="flex items-center text-sm text-gray-500 space-x-4">
@@ -54,17 +54,17 @@ const NewsCard = ({ title, excerpt, image, category, time, views, featured = fal
         <img 
           src={image} 
           alt={title}
-          className="w-full h-48 object-cover"
+          className="w-full h-36 object-cover"
         />
         <div className="absolute top-3 left-3">
           <span className="bg-primary text-white px-2 py-1 text-xs font-medium bn-text">{category}</span>
         </div>
       </div>
       <div className="p-4">
-        <h3 className="font-bold text-lg leading-tight mb-2 group-hover:text-primary transition-colors bn-text">
+        <h3 className="font-bold text-sm lg:text-lg leading-tight mb-2 group-hover:text-primary transition-colors bn-text">
           {title}
         </h3>
-        <p className="text-gray-600 text-sm leading-relaxed mb-3 bn-text line-clamp-2">
+        <p className="text-gray-600 hidden md:block  lg:text-sm leading-relaxed mb-3 bn-text line-clamp-2">
           {excerpt}
         </p>
         <div className="flex items-center justify-between text-sm text-gray-500">

@@ -30,7 +30,9 @@ const Index = () => {
       image: educationImage,
       category: "শিক্ষা",
       time: "৩ ঘন্টা আগে",
-      views: 12350
+      views: 12350,
+      featured: true
+
     },
     {
       title: "খেলাধুলায় বাংলাদেশের নতুন সাফল্য আন্তর্জাতিক পর্যায়ে",
@@ -38,7 +40,9 @@ const Index = () => {
       image: sportsImage,
       category: "খেলাধুলা",
       time: "৪ ঘন্টা আগে",
-      views: 9876
+      views: 9876,
+      featured: true
+
     },
     {
       title: "তথ্যপ্রযুক্তি খাতে নতুন স্টার্টআপ কোম্পানি",
@@ -63,7 +67,87 @@ const Index = () => {
       category: "সংস্কৃতি",
       time: "৭ ঘন্টা আগে",
       views: 6543
-    }
+    },
+      {
+    title: "বাংলাদেশে নতুন কৃষি প্রযুক্তি উদ্ভাবন",
+    excerpt: "কৃষি খাতে নতুন প্রযুক্তি ব্যবহার করে উৎপাদন বাড়ানো হচ্ছে। কৃষকরা স্মার্ট সেচ ও ড্রোন প্রযুক্তি ব্যবহার করছেন।",
+    image: techImage,
+    category: "প্রযুক্তি",
+    time: "৬ ঘন্টা আগে",
+    views: 6421
+  },
+  {
+    title: "স্বাস্থ্যসেবায় টেলিমেডিসিনের প্রসার",
+    excerpt: "গ্রামীণ এলাকায় টেলিমেডিসিন সেবা চালু হয়েছে। ডাক্তার এবং রোগীর মধ্যে দূরবর্তী পরামর্শ সহজ হয়েছে।",
+    image: healthImage,
+    category: "স্বাস্থ্য",
+    time: "৭ ঘন্টা আগে",
+    views: 3890
+  },
+  {
+    title: "শিক্ষা খাতে নতুন ই-লার্নিং প্ল্যাটফর্ম",
+    excerpt: "অনলাইন ক্লাস ও ই-লার্নিং অ্যাপের মাধ্যমে শিক্ষার্থীরা বাড়ি থেকে পড়াশোনা করতে পারছে।",
+    image: educationImage,
+    category: "শিক্ষা",
+    time: "৫ ঘন্টা আগে",
+    views: 4750
+  },
+  {
+    title: "আন্তর্জাতিক পর্যায়ে বাংলাদেশি স্টার্টআপের সাফল্য",
+    excerpt: "নতুন প্রযুক্তি ভিত্তিক স্টার্টআপগুলো আন্তর্জাতিক ইনভেস্টরদের দৃষ্টি আকর্ষণ করেছে।",
+    image: techImage,
+    category: "প্রযুক্তি",
+    time: "৮ ঘন্টা আগে",
+    views: 5123
+  },
+  {
+    title: "খেলাধুলায় নতুন প্রতিভার আবির্ভাব",
+    excerpt: "জাতীয় খেলায় নতুন তরুণ খেলোয়াড়রা অসাধারণ পারফরমেন্স দেখাচ্ছে।",
+    image: sportsImage,
+    category: "খেলাধুলা",
+    time: "৯ ঘন্টা আগে",
+    views: 2910
+  },
+  {
+    title: "পরিবেশ সংরক্ষণে নতুন উদ্যোগ",
+    excerpt: "বন সংরক্ষণ এবং নদী পরিষ্কার অভিযানের মাধ্যমে পরিবেশ রক্ষা করা হচ্ছে।",
+    image: cultureImage,
+    category: "সংস্কৃতি",
+    time: "৬ ঘন্টা আগে",
+    views: 1725
+  },
+  {
+    title: "দেশীয় সিনেমার আন্তর্জাতিক স্বীকৃতি",
+    excerpt: "বাংলাদেশি সিনেমা আন্তর্জাতিক চলচ্চিত্র উৎসবে পুরস্কৃত হয়েছে।",
+    image: cultureImage,
+    category: "বিনোদন",
+    time: "৫ ঘন্টা আগে",
+    views: 3120
+  },
+  {
+    title: "নতুন অর্থনৈতিক নীতি ঘোষণা",
+    excerpt: "সরকার নতুন নীতিমালার মাধ্যমে শিল্প ও ব্যবসা খাতকে আরও শক্তিশালী করছে।",
+    image: economyImage,
+    category: "অর্থনীতি",
+    time: "৪ ঘন্টা আগে",
+    views: 6980
+  },
+  {
+    title: "শিক্ষা খাতে আন্তর্জাতিক সহযোগিতা",
+    excerpt: "বিদেশি বিশ্ববিদ্যালয়ের সঙ্গে চুক্তি করে শিক্ষার্থীদের বিনিময় প্রোগ্রাম চালু হয়েছে।",
+    image: educationImage,
+    category: "শিক্ষা",
+    time: "৩ ঘন্টা আগে",
+    views: 4230
+  },
+  {
+    title: "প্রযুক্তি খাতে কৃত্রিম বুদ্ধিমত্তার নতুন উদ্ভাবন",
+    excerpt: "নতুন এআই প্রজেক্টের মাধ্যমে স্বয়ংক্রিয় সেবা প্রদান সহজ হচ্ছে।",
+    image: techImage,
+    category: "প্রযুক্তি",
+    time: "২ ঘন্টা আগে",
+    views: 7810
+  }
   ];
 
   const categoryNews = {
@@ -90,7 +174,7 @@ const Index = () => {
             {/* Latest News */}
             <section className="animate-in slide-in-from-bottom-4 duration-300">
               <h2 className="news-headline mb-6 text-primary">সর্বশেষ সংবাদ</h2>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-3 items-start ">
                 {latestNews.map((news, index) => (
                   <NewsCard
                     key={index}
