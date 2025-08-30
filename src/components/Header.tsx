@@ -1,11 +1,20 @@
-import { Search, Menu, Globe, User, Calendar, ChevronDown } from "lucide-react";
+import { Search, Menu, Globe, User, Calendar, ChevronDown, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const navItems = [
     { name: "সর্বশেষ", nameBn: "সর্বশেষ", path: "/" },
@@ -64,15 +73,50 @@ const Header = () => {
             {/* Right Side Icons */}
             <div className="flex items-center space-x-4">
               <div className="hidden md:flex items-center space-x-3">
-                <Search className="h-5 w-5 text-gray-500 cursor-pointer hover:text-primary" />
-                <Button variant="outline" size="sm" className="text-sm bn-text">
+                <Search 
+                  className="h-5 w-5 text-gray-500 cursor-pointer hover:text-primary" 
+                  onClick={() => setIsSearchOpen(true)}
+                />
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  className="text-sm bn-text"
+                  onClick={() => window.open('/e-paper.pdf', '_blank')}
+                >
                   ই-পেপার
                 </Button>
                 <div className="flex items-center space-x-1 text-sm text-gray-600">
                   <Globe className="h-4 w-4" />
                   <span>Eng</span>
                 </div>
-                <User className="h-5 w-5 text-gray-500 cursor-pointer hover:text-primary" />
+                
+                {/* User Dropdown */}
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="ghost" size="icon" className="hover:text-primary">
+                      <User className="h-5 w-5" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end" className="w-48">
+                    <DropdownMenuItem className="bn-text">
+                      লগইন
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="bn-text">
+                      নিবন্ধন
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem className="bn-text">
+                      প্রোফাইল
+                    </DropdownMenuItem>
+                    <DropdownMenuItem className="bn-text">
+                      সেটিংস
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem className="bn-text">
+                      লগআউট
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
 
               {/* Mobile Menu Button */}
@@ -118,6 +162,59 @@ const Header = () => {
           </div>
         )}
       </div>
+
+      {/* Search Modal */}
+      {isSearchOpen && (
+        <div className="fixed inset-0 bg-black/50 flex items-start justify-center z-50 pt-20">
+          <div className="bg-white rounded-lg shadow-lg w-full max-w-2xl mx-4">
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold bn-text">সংবাদ খুঁজুন</h3>
+                <Button 
+                  variant="ghost" 
+                  size="icon"
+                  onClick={() => setIsSearchOpen(false)}
+                >
+                  <X className="h-5 w-5" />
+                </Button>
+              </div>
+              <div className="relative mb-4">
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <Input
+                  placeholder="যেকোনো সংবাদ খুঁজুন..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="pl-10 bn-text"
+                  autoFocus
+                />
+              </div>
+              <div className="flex justify-end">
+                <Button className="bn-text">
+                  খুঁজুন
+                </Button>
+              </div>
+              
+              {/* Popular Searches */}
+              <div className="mt-6">
+                <h4 className="text-sm font-medium text-gray-700 mb-3 bn-text">জনপ্রিয় খোঁজ:</h4>
+                <div className="flex flex-wrap gap-2">
+                  {['রাজনীতি', 'অর্থনীতি', 'খেলা', 'বিনোদন', 'চাকরি'].map((term) => (
+                    <Button 
+                      key={term}
+                      variant="outline" 
+                      size="sm" 
+                      className="text-xs bn-text"
+                      onClick={() => setSearchQuery(term)}
+                    >
+                      {term}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 };

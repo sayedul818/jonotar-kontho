@@ -162,13 +162,13 @@ const Article = () => {
     <div className="min-h-screen bg-background">
       <Header />
       
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid lg:grid-cols-4 gap-8">
+      <div className="container mx-auto px-4 py-4 md:py-8">
+        <div className="grid lg:grid-cols-4 gap-4 lg:gap-8">
           {/* Main Content */}
           <div className="lg:col-span-3">
-            <article className="bg-white rounded-lg overflow-hidden">
+            <article className="bg-white rounded-lg overflow-hidden shadow-sm">
               {/* Article Header */}
-              <header className="p-6 lg:p-8">
+              <header className="p-4 md:p-6 lg:p-8">
                 <div className="flex items-center space-x-2 mb-4">
                   <Badge className="bg-primary text-white font-medium bn-text">
                     {article.category}
@@ -179,7 +179,7 @@ const Article = () => {
                   </span>
                 </div>
                 
-                <h1 className="text-3xl lg:text-4xl font-bold text-foreground mb-4 leading-tight bn-text">
+                <h1 className="text-xl md:text-2xl lg:text-4xl font-bold text-foreground mb-4 leading-tight bn-text">
                   {article.title}
                 </h1>
                 
@@ -242,18 +242,18 @@ const Article = () => {
               </header>
               
               {/* Advertisement Banner */}
-              <div className="mx-6 lg:mx-8 mb-6">
-                <div className="h-24 bg-gray-100 rounded-lg flex items-center justify-center text-gray-500">
+              <div className="mx-4 md:mx-6 lg:mx-8 mb-6">
+                <div className="h-16 md:h-24 bg-gray-100 rounded-lg flex items-center justify-center text-gray-500">
                   <span className="text-sm">বিজ্ঞাপন</span>
                 </div>
               </div>
               
               {/* Featured Image */}
-              <div className="px-6 lg:px-8 mb-8">
+              <div className="px-4 md:px-6 lg:px-8 mb-6 md:mb-8">
                 <img
                   src={article.featuredImage}
                   alt={article.title}
-                  className="w-full h-64 lg:h-96 object-cover rounded-lg"
+                  className="w-full h-48 md:h-64 lg:h-96 object-cover rounded-lg"
                 />
               </div>
               

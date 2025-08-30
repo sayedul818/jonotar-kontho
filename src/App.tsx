@@ -14,6 +14,9 @@ import Opinion from "./pages/Opinion";
 import Lifestyle from "./pages/Lifestyle";
 import Article from "./pages/Article";
 import Search from "./pages/Search";
+import Politics from "./pages/Politics";
+import Jobs from "./pages/Jobs";
+import Videos from "./pages/Videos";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -34,6 +37,9 @@ const App = () => (
           <Route path="/technology" element={<Technology />} />
           <Route path="/opinion" element={<Opinion />} />
           <Route path="/lifestyle" element={<Lifestyle />} />
+          <Route path="/politics" element={<Politics />} />
+          <Route path="/jobs" element={<Jobs />} />
+          <Route path="/videos" element={<Videos />} />
           <Route path="/article/:id" element={<Article />} />
           <Route path="/search" element={<Search />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
