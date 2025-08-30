@@ -1,4 +1,5 @@
 import { Clock, Eye } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface NewsCardProps {
   title: string;
@@ -8,12 +9,14 @@ interface NewsCardProps {
   time: string;
   views?: number;
   featured?: boolean;
+  id?: number;
 }
 
-const NewsCard = ({ title, excerpt, image, category, time, views, featured = false }: NewsCardProps) => {
+const NewsCard = ({ title, excerpt, image, category, time, views, featured = false, id = 1 }: NewsCardProps) => {
   if (featured) {
     return (
-      <div className=" bg-white border border-gray-200 hover:border-gray-300 transition-all duration-200 cursor-pointer group">
+      <Link to={`/article/${id}`}>
+        <div className=" bg-white border border-gray-200 hover:border-gray-300 transition-all duration-200 cursor-pointer group">
         <div className=" grid lg:grid-cols-1 gap-0">
           <div className="lg:order-1">
             <img 
@@ -45,11 +48,13 @@ const NewsCard = ({ title, excerpt, image, category, time, views, featured = fal
           </div>
         </div>
       </div>
+      </Link>
     );
   }
 
   return (
-    <div className="bg-white border border-gray-100 hover:border-gray-200 hover:shadow-md transition-all duration-200 cursor-pointer group">
+    <Link to={`/article/${id}`}>
+      <div className="bg-white border border-gray-100 hover:border-gray-200 hover:shadow-md transition-all duration-200 cursor-pointer group">
       <div className="relative">
         <img 
           src={image} 
@@ -81,6 +86,7 @@ const NewsCard = ({ title, excerpt, image, category, time, views, featured = fal
         </div>
       </div>
     </div>
+    </Link>
   );
 };
 
