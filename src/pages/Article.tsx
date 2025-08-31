@@ -9,6 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar } from "@/components/ui/avatar";
+import Footer from "@/components/footer";
 
 const Article = () => {
   const { id } = useParams();
@@ -412,6 +413,8 @@ const Article = () => {
           </div>
         </div>
       </div>
+      {/* Footer */}
+      <Footer></Footer>
     </div>
   );
 };

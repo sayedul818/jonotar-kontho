@@ -4,6 +4,7 @@ import Sidebar from "@/components/Sidebar";
 import NewsCard from "@/components/NewsCard";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import Footer from "@/components/footer";
 
 const National = () => {
   const nationalNews = [
@@ -133,6 +134,8 @@ const National = () => {
           </div>
         </div>
       </div>
+      {/* Footer */}
+      <Footer></Footer>
     </div>
   );
 };

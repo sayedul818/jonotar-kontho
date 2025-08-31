@@ -4,6 +4,7 @@ import Sidebar from "@/components/Sidebar";
 import NewsCard from "@/components/NewsCard";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import Footer from "@/components/footer";
 
 const International = () => {
   const internationalNews = [
@@ -158,6 +159,8 @@ const International = () => {
           </div>
         </div>
       </div>
+      {/* Footer */}
+      <Footer></Footer>
     </div>
   );
 };

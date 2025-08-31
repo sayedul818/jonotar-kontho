@@ -5,6 +5,7 @@ import NewsCard from "@/components/NewsCard";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
+import Footer from "@/components/footer";
 
 const Lifestyle = () => {
   const lifestyleNews = [
@@ -195,6 +196,8 @@ const Lifestyle = () => {
           </div>
         </div>
       </div>
+          {/* Footer */}
+      <Footer></Footer>
     </div>
   );
 };
