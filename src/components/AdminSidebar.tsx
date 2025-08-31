@@ -72,14 +72,14 @@ const AdminSidebar = ({ isOpen, onToggle }: AdminSidebarProps) => {
 
       {/* Sidebar */}
       <aside 
-        className={`fixed left-0 top-0 z-50 h-full w-64 bg-white shadow-lg border-r border-gray-200 transform transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:z-auto ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
+        className={`fixed left-0 top-0 z-50 h-full w-64 bg-white shadow-lg border-r border-gray-200 transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 lg:z-auto ${
+          isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         }`}
       >
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-200">
-          <Link to="/" className="flex items-center">
-            <h1 className="text-xl font-bold text-primary bn-text">
+          <Link to="/" className="flex items-center min-w-0">
+            <h1 className="text-lg lg:text-xl font-bold text-primary bn-text truncate">
               জনতার<span className="text-red-600"> কন্ঠ</span>
             </h1>
           </Link>
@@ -87,14 +87,14 @@ const AdminSidebar = ({ isOpen, onToggle }: AdminSidebarProps) => {
             variant="ghost"
             size="icon"
             onClick={onToggle}
-            className="lg:hidden"
+            className="lg:hidden flex-shrink-0"
           >
             <X className="h-5 w-5" />
           </Button>
         </div>
 
         {/* Navigation */}
-        <nav className="p-4 space-y-2">
+        <nav className="p-4 space-y-2 overflow-y-auto h-[calc(100vh-140px)]">
           {/* Back to Website */}
           <Link
             to="/"

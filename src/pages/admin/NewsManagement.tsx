@@ -123,15 +123,15 @@ const NewsManagement = () => {
   });
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-4 sm:p-6 space-y-4 sm:space-y-6 max-w-full overflow-x-hidden">
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 bn-text">সংবাদ পরিচালনা</h1>
-          <p className="text-gray-600 bn-text">সকল সংবাদ নিবন্ধ দেখুন ও পরিচালনা করুন</p>
+        <div className="min-w-0">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 bn-text">সংবাদ পরিচালনা</h1>
+          <p className="text-gray-600 bn-text text-sm sm:text-base">সকল সংবাদ নিবন্ধ দেখুন ও পরিচালনা করুন</p>
         </div>
-        <Link to="/admin/news/create">
-          <Button className="bn-text">
+        <Link to="/admin/news/create" className="w-full sm:w-auto">
+          <Button className="bn-text w-full sm:w-auto">
             <Plus className="h-4 w-4 mr-2" />
             নতুন সংবাদ
           </Button>
@@ -140,9 +140,9 @@ const NewsManagement = () => {
 
       {/* Filters */}
       <Card>
-        <CardContent className="p-6">
-          <div className="flex flex-col sm:flex-row gap-4">
-            <div className="flex-1">
+        <CardContent className="p-4 sm:p-6">
+          <div className="flex flex-col gap-4">
+            <div className="w-full">
               <div className="relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <Input
@@ -153,9 +153,9 @@ const NewsManagement = () => {
                 />
               </div>
             </div>
-            <div className="flex gap-2">
+            <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
               <Select value={statusFilter} onValueChange={setStatusFilter}>
-                <SelectTrigger className="w-[130px] bn-text">
+                <SelectTrigger className="w-full sm:w-[130px] bn-text">
                   <SelectValue placeholder="স্ট্যাটাস" />
                 </SelectTrigger>
                 <SelectContent>
@@ -168,7 +168,7 @@ const NewsManagement = () => {
               </Select>
               
               <Select value={categoryFilter} onValueChange={setCategoryFilter}>
-                <SelectTrigger className="w-[130px] bn-text">
+                <SelectTrigger className="w-full sm:w-[130px] bn-text">
                   <SelectValue placeholder="বিভাগ" />
                 </SelectTrigger>
                 <SelectContent>
@@ -194,12 +194,12 @@ const NewsManagement = () => {
             সকল সংবাদ নিবন্ধের তালিকা
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-4">
+        <CardContent className="p-4 sm:p-6">
+          <div className="space-y-3 sm:space-y-4">
             {filteredNews.map((news) => (
-              <div key={news.id} className="flex items-center space-x-4 p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
+              <div key={news.id} className="flex flex-col lg:flex-row lg:items-center space-y-3 lg:space-y-0 lg:space-x-4 p-3 sm:p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
                 {/* Thumbnail */}
-                <div className="flex-shrink-0">
+                <div className="flex-shrink-0 self-start lg:self-auto">
                   <img
                     src={news.image}
                     alt={news.title}
@@ -209,22 +209,22 @@ const NewsManagement = () => {
 
                 {/* Content */}
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-medium text-gray-900 line-clamp-2 bn-text">
+                  <h3 className="font-medium text-gray-900 line-clamp-2 bn-text text-sm sm:text-base">
                     {news.title}
                   </h3>
-                  <div className="flex items-center space-x-4 mt-2">
-                    <Badge variant="outline" className="bn-text">{news.category}</Badge>
+                  <div className="flex flex-wrap items-center gap-2 sm:gap-4 mt-2">
+                    <Badge variant="outline" className="bn-text text-xs">{news.category}</Badge>
                     {getStatusBadge(news.status)}
-                    <div className="flex items-center text-sm text-gray-500">
+                    <div className="flex items-center text-xs sm:text-sm text-gray-500">
                       <User className="h-3 w-3 mr-1" />
                       <span className="bn-text">{news.author}</span>
                     </div>
-                    <div className="flex items-center text-sm text-gray-500">
+                    <div className="flex items-center text-xs sm:text-sm text-gray-500">
                       <Calendar className="h-3 w-3 mr-1" />
                       <span>{news.publishDate}</span>
                     </div>
                     {news.views > 0 && (
-                      <div className="flex items-center text-sm text-gray-500">
+                      <div className="flex items-center text-xs sm:text-sm text-gray-500">
                         <Eye className="h-3 w-3 mr-1" />
                         <span>{news.views.toLocaleString()}</span>
                       </div>
@@ -233,17 +233,17 @@ const NewsManagement = () => {
                 </div>
 
                 {/* Actions */}
-                <div className="flex items-center space-x-2">
-                  <Button variant="ghost" size="sm">
-                    <Eye className="h-4 w-4" />
+                <div className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0">
+                  <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                    <Eye className="h-3 w-3 sm:h-4 sm:w-4" />
                   </Button>
-                  <Button variant="ghost" size="sm">
-                    <Edit className="h-4 w-4" />
+                  <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                    <Edit className="h-3 w-3 sm:h-4 sm:w-4" />
                   </Button>
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
-                      <Button variant="ghost" size="sm">
-                        <MoreHorizontal className="h-4 w-4" />
+                      <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                        <MoreHorizontal className="h-3 w-3 sm:h-4 sm:w-4" />
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">

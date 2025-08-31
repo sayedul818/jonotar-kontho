@@ -110,20 +110,20 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="p-4 sm:p-6 space-y-4 sm:space-y-6 max-w-full overflow-x-hidden">
       {/* Header */}
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-3xl font-bold text-gray-900 bn-text">ড্যাশবোর্ড</h1>
-          <p className="text-gray-600 bn-text">জনতার কন্ঠ অ্যাডমিন প্যানেল</p>
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+        <div className="min-w-0">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 bn-text">ড্যাশবোর্ড</h1>
+          <p className="text-gray-600 bn-text text-sm sm:text-base">জনতার কন্ঠ অ্যাডমিন প্যানেল</p>
         </div>
-        <div className="flex items-center space-x-3">
-          <Button variant="outline" size="sm" className="bn-text">
-            <Calendar className="h-4 w-4 mr-2" />
-            আজ: ১৫ জানুয়ারি, ২০২৪
+        <div className="flex flex-col sm:flex-row items-start sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
+          <Button variant="outline" size="sm" className="bn-text w-full sm:w-auto">
+            <Calendar className="h-4 w-4 mr-2 flex-shrink-0" />
+            <span className="truncate">আজ: ১৫ জানুয়ারি, ২০২৪</span>
           </Button>
-          <Link to="/admin/news/create">
-            <Button className="bn-text">
+          <Link to="/admin/news/create" className="w-full sm:w-auto">
+            <Button className="bn-text w-full">
               <Plus className="h-4 w-4 mr-2" />
               নতুন সংবাদ
             </Button>
@@ -132,7 +132,7 @@ const Dashboard = () => {
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         {stats.map((stat, index) => (
           <Card key={index} className="hover:shadow-lg transition-shadow">
             <CardContent className="p-6">
@@ -151,43 +151,43 @@ const Dashboard = () => {
         ))}
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 sm:gap-6">
         {/* Recent News */}
-        <div className="lg:col-span-2">
+        <div className="xl:col-span-2">
           <Card>
-            <CardHeader>
-              <CardTitle className="bn-text">সাম্প্রতিক সংবাদ</CardTitle>
+            <CardHeader className="pb-4">
+              <CardTitle className="bn-text text-lg sm:text-xl">সাম্প্রতিক সংবাদ</CardTitle>
               <CardDescription className="bn-text">
                 সর্বশেষ প্রকাশিত ও খসড়া সংবাদসমূহ
               </CardDescription>
             </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
+            <CardContent className="p-4 sm:p-6">
+              <div className="space-y-3 sm:space-y-4">
                 {recentNews.map((news) => (
-                  <div key={news.id} className="flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-                    <div className="flex-1">
-                      <h3 className="font-medium text-gray-900 bn-text line-clamp-2">{news.title}</h3>
-                      <div className="flex items-center space-x-4 mt-2">
-                        <Badge variant="outline" className="bn-text">{news.category}</Badge>
+                  <div key={news.id} className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors space-y-3 sm:space-y-0">
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-medium text-gray-900 bn-text line-clamp-2 text-sm sm:text-base">{news.title}</h3>
+                      <div className="flex flex-wrap items-center gap-2 sm:gap-4 mt-2">
+                        <Badge variant="outline" className="bn-text text-xs">{news.category}</Badge>
                         <Badge 
                           variant={news.status === "প্রকাশিত" ? "default" : "secondary"}
-                          className="bn-text"
+                          className="bn-text text-xs"
                         >
                           {news.status}
                         </Badge>
-                        <span className="text-sm text-gray-500">{news.date}</span>
-                        <span className="text-sm text-gray-500 flex items-center">
+                        <span className="text-xs sm:text-sm text-gray-500">{news.date}</span>
+                        <span className="text-xs sm:text-sm text-gray-500 flex items-center">
                           <Eye className="h-3 w-3 mr-1" />
                           {news.views}
                         </span>
                       </div>
                     </div>
-                    <div className="flex items-center space-x-2 ml-4">
-                      <Button variant="ghost" size="sm">
-                        <Edit className="h-4 w-4" />
+                    <div className="flex items-center space-x-1 sm:space-x-2 flex-shrink-0">
+                      <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                        <Edit className="h-3 w-3 sm:h-4 sm:w-4" />
                       </Button>
-                      <Button variant="ghost" size="sm">
-                        <Trash2 className="h-4 w-4" />
+                      <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                        <Trash2 className="h-3 w-3 sm:h-4 sm:w-4" />
                       </Button>
                     </div>
                   </div>
