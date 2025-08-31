@@ -18,6 +18,10 @@ import Politics from "./pages/Politics";
 import Jobs from "./pages/Jobs";
 import Videos from "./pages/Videos";
 import NotFound from "./pages/NotFound";
+import Auth from "./pages/Auth";
+import AdminLayout from "./pages/admin/AdminLayout";
+import Dashboard from "./pages/admin/Dashboard";
+import NewsManagement from "./pages/admin/NewsManagement";
 
 const queryClient = new QueryClient();
 
@@ -42,6 +46,18 @@ const App = () => (
           <Route path="/videos" element={<Videos />} />
           <Route path="/article/:id" element={<Article />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/auth" element={<Auth />} />
+          
+          {/* Admin Routes */}
+          <Route path="/admin" element={<AdminLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="news" element={<NewsManagement />} />
+            <Route path="news/create" element={<div className="p-6 bn-text">নতুন সংবাদ তৈরি করার পেজ (শীঘ্রই আসছে)</div>} />
+            <Route path="categories" element={<div className="p-6 bn-text">বিভাগ পরিচালনার পেজ (শীঘ্রই আসছে)</div>} />
+            <Route path="users" element={<div className="p-6 bn-text">ব্যবহারকারী পরিচালনার পেজ (শীঘ্রই আসছে)</div>} />
+            <Route path="settings" element={<div className="p-6 bn-text">সেটিংস পেজ (শীঘ্রই আসছে)</div>} />
+          </Route>
+          
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

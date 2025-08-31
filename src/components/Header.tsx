@@ -98,11 +98,15 @@ const Header = () => {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-48">
-                    <DropdownMenuItem className="bn-text">
-                      লগইন
+                    <DropdownMenuItem asChild className="bn-text">
+                      <Link to="/auth">
+                        লগইন
+                      </Link>
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="bn-text">
-                      নিবন্ধন
+                    <DropdownMenuItem asChild className="bn-text">
+                      <Link to="/auth">
+                        নিবন্ধন
+                      </Link>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem className="bn-text">
