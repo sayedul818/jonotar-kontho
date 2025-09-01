@@ -21,7 +21,16 @@ import NotFound from "./pages/NotFound";
 import Auth from "./pages/Auth";
 import AdminLayout from "./pages/admin/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
-import NewsManagement from "./pages/admin/NewsManagement";
+import AllNews from "./pages/admin/AllNews";
+import TodaysHeadlines from "./pages/admin/TodaysHeadlines";
+import EmergencyNews from "./pages/admin/EmergencyNews";
+import CreateNews from "./pages/admin/CreateNews";
+import EditNews from "./pages/admin/EditNews";
+import Drafts from "./pages/admin/Drafts";
+import CategoryManagement from "./pages/admin/CategoryManagement";
+import UserManagement from "./pages/admin/UserManagement";
+import Reports from "./pages/admin/Reports";
+import Settings from "./pages/admin/Settings";
 
 const queryClient = new QueryClient();
 
@@ -51,11 +60,16 @@ const App = () => (
           {/* Admin Routes */}
           <Route path="/admin" element={<AdminLayout />}>
             <Route index element={<Dashboard />} />
-            <Route path="news" element={<NewsManagement />} />
-            <Route path="news/create" element={<div className="p-6 bn-text">নতুন সংবাদ তৈরি করার পেজ (শীঘ্রই আসছে)</div>} />
-            <Route path="categories" element={<div className="p-6 bn-text">বিভাগ পরিচালনার পেজ (শীঘ্রই আসছে)</div>} />
-            <Route path="users" element={<div className="p-6 bn-text">ব্যবহারকারী পরিচালনার পেজ (শীঘ্রই আসছে)</div>} />
-            <Route path="settings" element={<div className="p-6 bn-text">সেটিংস পেজ (শীঘ্রই আসছে)</div>} />
+            <Route path="news" element={<AllNews />} />
+            <Route path="news/headlines" element={<TodaysHeadlines />} />
+            <Route path="news/emergency" element={<EmergencyNews />} />
+            <Route path="news/create" element={<CreateNews />} />
+            <Route path="news/edit" element={<EditNews />} />
+            <Route path="news/drafts" element={<Drafts />} />
+            <Route path="categories" element={<CategoryManagement />} />
+            <Route path="users" element={<UserManagement />} />
+            <Route path="reports" element={<Reports />} />
+            <Route path="settings" element={<Settings />} />
           </Route>
           
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
