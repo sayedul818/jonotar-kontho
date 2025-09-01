@@ -4,11 +4,11 @@ const Footer = () => {
   return (
       <footer className="bg-primary text-primary-foreground mt-16">
         <div className="container mx-auto px-4 py-12">
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-3 md:grid-cols-4 gap-8">
             <div>
               <h3 className="font-bold text-xl mb-4">জনতার কন্ঠ</h3> 
               <p className="text-sm opacity-90 leading-relaxed">
-                বাংলাদেশের অগ্রণী অনলাইন সংবাদ মাধ্যম। সত্য ও নিরপেক্ষ সংবাদ পরিবেশনে আমরা প্রতিজ্ঞাবদ্ধ।
+                বাংলাদেশের অগ্রণী অনলাইন সংবাদ মাধ্যম। 
               </p>
             </div>
             
@@ -32,7 +32,7 @@ const Footer = () => {
               </ul>
             </div>
             
-            <div>
+            <div className='hidden lg:block'>
               <h4 className="font-semibold mb-4">যোগাযোগ</h4>
               <div className="space-y-2 text-sm opacity-90">
                 <p>ইমেইল: info@jonotarkontho.com</p>

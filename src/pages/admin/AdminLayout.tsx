@@ -13,7 +13,7 @@ const AdminLayout = () => {
       <AdminSidebar isOpen={sidebarOpen} onToggle={() => setSidebarOpen(!sidebarOpen)} />
       
       {/* Main Content */}
-      <div className="flex-1 flex flex-col min-w-0 lg:ml-0">
+      <div className="flex-1 flex flex-col min-w-0 lg:ml-64">
         {/* Top Header */}
         <header className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-30 w-full">
           <div className="flex items-center justify-between px-4 sm:px-6 py-4">

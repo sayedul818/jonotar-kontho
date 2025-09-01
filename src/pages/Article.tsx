@@ -163,14 +163,14 @@ const Article = () => {
     <div className="min-h-screen bg-background">
       <Header />
       
-      <div className="container mx-auto px-4 py-4 md:py-8">
-        <div className="grid lg:grid-cols-4 gap-4 lg:gap-8">
+      <div className="container mx-auto px-4 md:px-6 lg:px-8 py-4 md:py-8">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
           {/* Main Content */}
           <div className="lg:col-span-3">
             <article className="bg-white rounded-lg overflow-hidden shadow-sm">
               {/* Article Header */}
-              <header className="p-4 md:p-6 lg:p-8">
-                <div className="flex items-center space-x-2 mb-4">
+              <header className="px-4 md:px-6 lg:px-8 py-4 md:py-6 lg:py-8">
+                <div className="flex flex-wrap items-center gap-2 mb-4 text-sm text-muted-foreground">
                   <Badge className="bg-primary text-white font-medium bn-text">
                     {article.category}
                   </Badge>
@@ -191,8 +191,8 @@ const Article = () => {
                 )}
                 
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-                  <div className="flex items-center space-x-4 text-sm text-muted-foreground">
-                    <div className="flex items-center space-x-2">
+                  <div className="flex flex-wrap items-center gap-4">
+                    <div className="flex items-center gap-2 ">
                       <User className="h-4 w-4" />
                       <span className="font-medium bn-text">{article.author}</span>
                     </div>
@@ -203,7 +203,7 @@ const Article = () => {
                   </div>
                   
                   {/* Social Share Buttons */}
-                  <div className="flex items-center space-x-2">
+                  <div className="flex flex-wrap gap-2">
                     <Button 
                       variant="outline" 
                       size="sm"
@@ -250,7 +250,7 @@ const Article = () => {
               </div>
               
               {/* Featured Image */}
-              <div className="px-4 md:px-6 lg:px-8 mb-6 md:mb-8">
+              <div className="px-4 md:px-6 lg:px-8 mb-6">
                 <img
                   src={article.featuredImage}
                   alt={article.title}
@@ -259,7 +259,7 @@ const Article = () => {
               </div>
               
               {/* Article Content */}
-              <div className="px-6 lg:px-8 mb-8">
+              <div className="px-6 lg:px-8 pb-8">
                 <div 
                   className="prose prose-lg max-w-none text-foreground leading-relaxed bn-text"
                   dangerouslySetInnerHTML={{ __html: article.content }}
@@ -267,11 +267,11 @@ const Article = () => {
               </div>
               
               {/* Reaction Bar */}
-              <div className="px-6 lg:px-8 mb-6">
-                <Separator className="mb-6" />
-                <div className="flex items-center justify-between">
+              <div className="px-6 lg:px-8 mb-8">
+                <Separator className="mb-4" />
+                <div className="flex flex-wrap items-center justify-between gap-2">
                   <span className="text-lg font-semibold bn-text">আপনার প্রতিক্রিয়া:</span>
-                  <div className="flex items-center space-x-2">
+                  <div className="flex flex-wrap gap-2">
                     {reactions.map((reaction) => (
                       <Button
                         key={reaction.label}
@@ -420,3 +420,213 @@ const Article = () => {
 };
 
 export default Article;
+
+// import { Clock, Eye, User, Facebook, Twitter, MessageCircle, Copy, ThumbsUp, ThumbsDown, MessageSquare, Send } from "lucide-react";
+// import { useParams } from "react-router-dom";
+// import { useState } from "react";
+// import Header from "@/components/Header";
+// import Sidebar from "@/components/Sidebar";
+// import NewsCard from "@/components/NewsCard";
+// import { Button } from "@/components/ui/button";
+// import { Badge } from "@/components/ui/badge";
+// import { Separator } from "@/components/ui/separator";
+// import { Textarea } from "@/components/ui/textarea";
+// import { Avatar } from "@/components/ui/avatar";
+// import Footer from "@/components/footer";
+
+// const Article = () => {
+//   const { id } = useParams();
+//   const [selectedReaction, setSelectedReaction] = useState<string>("");
+//   const [comment, setComment] = useState("");
+//   const [comments, setComments] = useState([
+//     {
+//       id: 1,
+//       author: "রহিম উদ্দিন",
+//       avatar: "র",
+//       time: "২ ঘন্টা আগে",
+//       content: "খুবই গুরুত্বপূর্ণ একটি সিদ্ধান্ত। আশা করি সরকার এই পরিকল্পনা সঠিকভাবে বাস্তবায়ন করবে।",
+//       likes: 12,
+//       dislikes: 2,
+//       replies: []
+//     },
+//     {
+//       id: 2,
+//       author: "ফাতিমা খাতুন",
+//       avatar: "ফ",
+//       time: "১ ঘন্টা আগে",
+//       content: "শিক্ষা খাতে বিনিয়োগ বাড়ানো জরুরি ছিল। এটি একটি ইতিবাচক পদক্ষেপ।",
+//       likes: 8,
+//       dislikes: 0,
+//       replies: []
+//     }
+//   ]);
+
+//   const reactions = [
+//     { emoji: "👍", label: "Like", count: 245 },
+//     { emoji: "❤️", label: "Love", count: 156 },
+//     { emoji: "😮", label: "Wow", count: 89 },
+//     { emoji: "😢", label: "Sad", count: 12 },
+//     { emoji: "😡", label: "Angry", count: 5 }
+//   ];
+
+//   const handleComment = () => {
+//     if (comment.trim()) {
+//       const newComment = {
+//         id: comments.length + 1,
+//         author: "আপনি",
+//         avatar: "আ",
+//         time: "এখনই",
+//         content: comment,
+//         likes: 0,
+//         dislikes: 0,
+//         replies: []
+//       };
+//       setComments([...comments, newComment]);
+//       setComment("");
+//     }
+//   };
+
+//   const handleShare = (platform: string) => {
+//     const url = window.location.href;
+//     const title = "Article Title"; // replace with real title
+//     switch(platform){
+//       case 'facebook': window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`,'_blank'); break;
+//       case 'twitter': window.open(`https://twitter.com/intent/tweet?url=${url}&text=${title}`,'_blank'); break;
+//       case 'whatsapp': window.open(`https://wa.me/?text=${title} ${url}`,'_blank'); break;
+//       case 'copy': navigator.clipboard.writeText(url); break;
+//     }
+//   }
+
+//   return (
+//     <div className="min-h-screen bg-background flex flex-col">
+//       <Header />
+      
+//       <div className="container mx-auto px-4 md:px-6 lg:px-8 py-4 md:py-8">
+//         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 lg:gap-8">
+          
+//           {/* Main Content */}
+//           <main className="lg:col-span-3 space-y-8">
+//             <article className="bg-white rounded-lg shadow-sm overflow-hidden">
+              
+//               {/* Article Header */}
+//               <header className="px-4 md:px-6 lg:px-8 py-4 md:py-6 lg:py-8">
+//                 <div className="flex flex-wrap items-center gap-2 mb-4 text-sm text-muted-foreground">
+//                   <Badge className="bg-primary text-white font-medium bn-text">জাতীয়</Badge>
+//                   <span>•</span>
+//                   <span className="bn-text">২৬ ডিসেম্বর, ২০২৪, দুপুর ১২:৩০</span>
+//                 </div>
+
+//                 <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold mb-4 bn-text">প্রধানমন্ত্রীর নতুন উন্নয়ন পরিকল্পনা দেশের অর্থনৈতিক ভবিষ্যৎ পরিবর্তন করবে</h1>
+//                 <p className="text-lg md:text-xl text-muted-foreground mb-6 bn-text">
+//                   সরকারের এই উদ্যোগ দেশের অর্থনৈতিক কাঠামোতে এক নতুন মাত্রা যোগ করবে বলে মনে করছেন বিশেষজ্ঞরা
+//                 </p>
+
+//                 <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-6 text-sm text-muted-foreground">
+//                   <div className="flex flex-wrap items-center gap-4">
+//                     <div className="flex items-center gap-2">
+//                       <User className="h-4 w-4" />
+//                       <span className="bn-text font-medium">আবুল কালাম</span>
+//                     </div>
+//                     <div className="flex items-center gap-2">
+//                       <Eye className="h-4 w-4" />
+//                       <span>25,420 পঠিত</span>
+//                     </div>
+//                   </div>
+
+//                   <div className="flex flex-wrap gap-2">
+//                     <Button variant="outline" size="sm" onClick={() => handleShare('facebook')}>
+//                       <Facebook className="h-4 w-4 mr-1 text-blue-600" /> Facebook
+//                     </Button>
+//                     <Button variant="outline" size="sm" onClick={() => handleShare('twitter')}>
+//                       <Twitter className="h-4 w-4 mr-1 text-blue-400" /> Twitter
+//                     </Button>
+//                     <Button variant="outline" size="sm" onClick={() => handleShare('whatsapp')}>
+//                       <MessageCircle className="h-4 w-4 mr-1 text-green-500" /> WhatsApp
+//                     </Button>
+//                     <Button variant="outline" size="sm" onClick={() => handleShare('copy')}>
+//                       <Copy className="h-4 w-4 mr-1" /> Copy
+//                     </Button>
+//                   </div>
+//                 </div>
+
+//                 <Separator />
+//               </header>
+
+//               {/* Featured Image */}
+//               <div className="px-4 md:px-6 lg:px-8 mb-6">
+//                 <img src="/src/assets/economy-news.jpg" alt="Article" className="w-full h-64 md:h-80 lg:h-96 object-cover rounded-lg" />
+//               </div>
+
+//               {/* Article Content */}
+//               <div className="px-6 lg:px-8 pb-8">
+//                 <div className="prose prose-lg max-w-none bn-text" dangerouslySetInnerHTML={{__html: "<p>লেখার বিষয়বস্তু এখানে থাকবে...</p>"}} />
+//               </div>
+
+//               {/* Reactions */}
+//               <div className="px-6 lg:px-8 mb-8">
+//                 <Separator className="mb-4" />
+//                 <div className="flex flex-wrap items-center justify-between gap-2">
+//                   <span className="text-lg font-semibold bn-text">আপনার প্রতিক্রিয়া:</span>
+//                   <div className="flex flex-wrap gap-2">
+//                     {['👍','❤️','😮','😢','😡'].map((emoji,index)=>(
+//                       <Button key={index} size="sm" variant="outline">{emoji}</Button>
+//                     ))}
+//                   </div>
+//                 </div>
+//               </div>
+
+//               {/* Comments */}
+//               <div className="px-6 lg:px-8 pb-8">
+//                 <Separator className="mb-6" />
+//                 <h3 className="text-xl font-bold mb-4 bn-text">মতামত ({comments.length})</h3>
+//                 <Textarea rows={3} value={comment} onChange={(e)=>setComment(e.target.value)} placeholder="আপনার মতামত লিখুন..." className="mb-3 bn-text" />
+//                 <Button onClick={handleComment} className="mb-6 bn-text">
+//                   <Send className="h-4 w-4 mr-2" /> মতামত পোস্ট করুন
+//                 </Button>
+
+//                 <div className="space-y-4">
+//                   {comments.map(c=>(
+//                     <div key={c.id} className="border border-gray-200 rounded-lg p-4 flex gap-3">
+//                       <Avatar className="h-10 w-10 bg-primary text-white flex items-center justify-center"><span className="bn-text">{c.avatar}</span></Avatar>
+//                       <div className="flex-1">
+//                         <div className="flex items-center gap-2 mb-1">
+//                           <span className="font-medium bn-text">{c.author}</span>
+//                           <span className="text-sm text-muted-foreground bn-text">{c.time}</span>
+//                         </div>
+//                         <p className="text-sm text-muted-foreground bn-text mb-2">{c.content}</p>
+//                         <div className="flex gap-2">
+//                           <Button variant="ghost" size="sm" className="text-xs"><ThumbsUp className="h-3 w-3 mr-1" />{c.likes}</Button>
+//                           <Button variant="ghost" size="sm" className="text-xs"><ThumbsDown className="h-3 w-3 mr-1" />{c.dislikes}</Button>
+//                           <Button variant="ghost" size="sm" className="text-xs bn-text"><MessageSquare className="h-3 w-3 mr-1" /> উত্তর দিন</Button>
+//                         </div>
+//                       </div>
+//                     </div>
+//                   ))}
+//                 </div>
+//               </div>
+//             </article>
+
+//             {/* Related Articles */}
+//             <section className="mt-12">
+//               <h2 className="text-2xl font-bold mb-6 text-primary bn-text">সংশ্লিষ্ট সংবাদ</h2>
+//               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+//                 {[1,2,3,4].map(id=><NewsCard key={id} id={id} title="শিরোনাম" excerpt="সংক্ষিপ্ত বর্ণনা" image="/src/assets/education-news.jpg" category="জাতীয়" time="৩ ঘন্টা আগে" />)}
+//               </div>
+//             </section>
+//           </main>
+
+//           {/* Sidebar */}
+//           <aside className="lg:col-span-1 flex flex-col gap-6">
+//             <div className="h-64 bg-gray-100 rounded-lg flex items-center justify-center text-gray-500">বিজ্ঞাপন</div>
+//             <Sidebar />
+//           </aside>
+
+//         </div>
+//       </div>
+
+//       <Footer />
+//     </div>
+//   );
+// };
+
+// export default Article;

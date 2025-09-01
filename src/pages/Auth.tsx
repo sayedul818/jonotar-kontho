@@ -24,17 +24,44 @@ const Auth = () => {
     confirmPassword: "",
   });
 
-  const handleSignIn = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-    // Simulate API call
-    setTimeout(() => {
-      setIsLoading(false);
-      console.log("Sign in data:", signInData);
-      // Redirect logic would go here
-    }, 2000);
-  };
+  // const handleSignIn = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   setIsLoading(true);
+  //   // Simulate API call
+  //   setTimeout(() => {
+  //     setIsLoading(false);
+  //     console.log("Sign in data:", signInData);
+  //     // Redirect logic would go here
+  //   }, 2000);
+  // };
+const handleSignIn = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setIsLoading(true);
 
+  // Simulate API call delay
+  setTimeout(() => {
+    setIsLoading(false);
+
+    // Default admin credentials
+    const defaultAdmin = {
+      email: "admin@example.com",
+      password: "Admin@123",
+    };
+
+    if (
+      signInData.email === defaultAdmin.email &&
+      signInData.password === defaultAdmin.password
+    ) {
+      console.log("Admin logged in!");
+      // Redirect to admin panel
+      window.location.href = "/admin"; // replace with your admin route
+    } else {
+      console.log("User logged in!");
+      // Redirect to normal user dashboard
+      window.location.href = "/dashboard"; // replace with your user route
+    }
+  }, 2000);
+};
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);

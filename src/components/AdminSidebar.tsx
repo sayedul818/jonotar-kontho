@@ -12,7 +12,11 @@ import {
   ChevronDown,
   Plus,
   Edit,
-  Trash2
+  Trash2,
+  ChartSpline,
+  DraftingCompass,
+  Siren,
+  Target
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
@@ -40,7 +44,12 @@ const AdminSidebar = ({ isOpen, onToggle }: AdminSidebarProps) => {
       path: "/admin/news",
       subItems: [
         { name: "সকল সংবাদ", path: "/admin/news", icon: FileText },
+        { name: "আজকের হেডলাইনস", path: "/admin/news/headlines", icon: Target },
+        { name: "জরুরি সংবাদ", path: "/admin/news/emergency", icon: Siren },
         { name: "নতুন সংবাদ", path: "/admin/news/create", icon: Plus },
+        { name: "সম্পাদনা", path: "/admin/news/edit", icon: Edit },
+        { name: "খসড়া (Drafts)", path: "/admin/news/delete", icon: DraftingCompass },
+
       ]
     },
     {
@@ -54,10 +63,16 @@ const AdminSidebar = ({ isOpen, onToggle }: AdminSidebarProps) => {
       path: "/admin/users",
     },
     {
+      name: "রিপোর্ট",
+      icon: ChartSpline,
+      path: "/admin/reports",
+    },
+    {
       name: "সেটিংস",
       icon: Settings,
       path: "/admin/settings",
     },
+,
   ];
 
   return (
@@ -72,12 +87,12 @@ const AdminSidebar = ({ isOpen, onToggle }: AdminSidebarProps) => {
 
       {/* Sidebar */}
       <aside 
-        className={`fixed left-0 top-0 z-50 h-full w-64 bg-white shadow-lg border-r border-gray-200 transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 lg:z-auto ${
+        className={`fixed left-0 top-0 z-50 h-screen  w-64 bg-white shadow-lg border-r border-gray-200 transform transition-transform duration-300 ease-in-out  lg:translate-x-0 lg:z-auto ${
           isOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'
         }`}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-200">
+        <div className="flex items-center  justify-between p-4 lg:p-5 border-b border-gray-200">
           <Link to="/" className="flex items-center min-w-0">
             <h1 className="text-lg lg:text-xl font-bold text-primary bn-text truncate">
               জনতার<span className="text-red-600"> কন্ঠ</span>

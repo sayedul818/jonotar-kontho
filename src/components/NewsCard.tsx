@@ -17,7 +17,7 @@ const NewsCard = ({ title, excerpt, image, category, time, views, featured = fal
     return (
       <Link to={`/article/${id}`}>
         <div className=" bg-white border border-gray-200 hover:border-gray-300 transition-all duration-200 cursor-pointer group">
-        <div className=" grid lg:grid-cols-1 gap-0">
+        <div className=" grid  lg:grid-cols-1 gap-0">
           <div className="lg:order-1">
             <img 
               src={image} 
