@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar } from "@/components/ui/avatar";
-import Footer from "@/components/footer";
+import Footer from "@/components/Footer";
 
 const Article = () => {
   const { id } = useParams();

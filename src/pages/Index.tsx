@@ -4,7 +4,7 @@ import HeroSlider from "@/components/HeroSlider";
 import NewsCard from "@/components/NewsCard";
 import Sidebar from "@/components/Sidebar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import Footer from "@/components/footer";
+import Footer from "@/components/Footer";
 
 // Import images
 import economyImage from "@/assets/economy-news.jpg";

@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Search, Play, Clock, Eye, Share2 } from "lucide-react";
 import { useState } from "react";
-import Footer from "@/components/footer";
+import Footer from "@/components/Footer";
 
 const Videos = () => {
   const [searchTerm, setSearchTerm] = useState("");

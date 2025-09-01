@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Search, MapPin, Clock, Building, Users, DollarSign } from "lucide-react";
 import { useState } from "react";
-import Footer from "@/components/footer";
+import Footer from "@/components/Footer";
 
 const Jobs = () => {
   const [searchTerm, setSearchTerm] = useState("");

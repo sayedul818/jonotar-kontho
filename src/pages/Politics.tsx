@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Search, Filter } from "lucide-react";
 import { useState } from "react";
-import Footer from "@/components/footer";
+import Footer from "@/components/Footer";
 
 const Politics = () => {
   const [searchTerm, setSearchTerm] = useState("");
