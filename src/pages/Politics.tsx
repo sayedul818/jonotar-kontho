@@ -6,78 +6,31 @@ import { Badge } from "@/components/ui/badge";
 import { Search, Filter } from "lucide-react";
 import { useState } from "react";
 import Footer from "@/components/Footer";
+import { useGetNewsByCategoryQuery } from "@/store/api/newsApi";
 
 const Politics = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedFilter, setSelectedFilter] = useState("সব");
 
-  const filters = ["সব", "সংসদ", "নির্বাচন", "দলীয় রাজনীতি", "সরকারি নীতি"];
+  const { data: newsResponse, isLoading, error } = useGetNewsByCategoryQuery({
+    category: 'politics',
+    page: 1,
+    limit: 10
+  });
 
-  const politicsNews = [
-    {
-      id: 1,
-      title: "জাতীয় সংসদে বাজেট অধিবেশন শুরু আগামী সপ্তাহ থেকে",
-      excerpt: "আগামী অর্থবছরের বাজেট নিয়ে আলোচনা হবে পার্লামেন্টে।",
-      image: "/src/assets/economy-news.jpg",
-      category: "সংসদ",
-      author: "রাজনৈতিক সংবাদদাতা",
-      time: "২ ঘন্টা আগে",
-      isFeatured: true
-    },
-    {
-      id: 2,
-      title: "বিরোধী দলের নতুন কর্মসূচি ঘোষণা",
-      excerpt: "আগামী মাসে দেশব্যাপী শান্তিপূর্ণ বিক্ষোভের কর্মসূচি।",
-      image: "/src/assets/culture-news.jpg",
-      category: "দলীয় রাজনীতি",
-      author: "সিয়াম আহমেদ",
-      time: "৩ ঘন্টা আগে"
-    },
-    {
-      id: 3,
-      title: "নির্বাচন কমিশনের নতুন নির্দেশনা জারি",
-      excerpt: "আগামী স্থানীয় সরকার নির্বাচনে নতুন নিয়মকানুন।",
-      image: "/src/assets/education-news.jpg", 
-      category: "নির্বাচন",
-      author: "নির্বাচনী প্রতিবেদক",
-      time: "৪ ঘন্টা আগে"
-    },
-    {
-      id: 4,
-      title: "কৃষি ভর্তুকি নীতিতে নতুন সংযোজন",
-      excerpt: "ছোট কৃষকদের জন্য বিশেষ ভর্তুকি প্যাকেজ ঘোষণা।",
-      image: "/src/assets/sports-news.jpg",
-      category: "সরকারি নীতি", 
-      author: "নীতি বিশ্লেষক",
-      time: "৫ ঘন্টা আগে"
-    },
-    {
-      id: 5,
-      title: "সংসদীয় কমিটির গুরুত্বপূর্ণ সুপারিশ",
-      excerpt: "শিক্ষা মন্ত্রণালয়ের কার্যক্রম নিয়ে কমিটির প্রতিবেদন।",
-      image: "/src/assets/health-news.jpg",
-      category: "সংসদ",
-      author: "সংসদীয় প্রতিবেদক", 
-      time: "৬ ঘন্টা আগে"
-    },
-    {
-      id: 6,
-      title: "রাজনৈতিক দলগুলোর জোট গঠনের নতুন উদ্যোগ",
-      excerpt: "আগামী নির্বাচন সামনে রেখে ছোট দলগুলোর জোট।",
-      image: "/src/assets/tech-news.jpg",
-      category: "দলীয় রাজনীতি",
-      author: "জোট বিশ্লেষক",
-      time: "৮ ঘন্টা আগে"
-    }
-  ];
+  const filters = ["সব", "সংসদ", "নির্বাচন", "দলীয় রাজনীতি", "সরকারি নীতি"];
+  const politicsNews = newsResponse?.articles || [];
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading politics news</div>;
 
   const filteredNews = politicsNews.filter(news => 
     (selectedFilter === "সব" || news.category === selectedFilter) &&
     (searchTerm === "" || news.title.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
-  const featuredNews = filteredNews.find(news => news.isFeatured);
-  const regularNews = filteredNews.filter(news => !news.isFeatured);
+  const featuredNews = filteredNews.find(news => news.featured);
+  const regularNews = filteredNews.filter(news => !news.featured);
 
   return (
     <div className="min-h-screen bg-background">
@@ -134,7 +87,15 @@ const Politics = () => {
         {featuredNews && (
           <div className="mb-12">
             <h2 className="text-2xl font-bold mb-6 text-primary bn-text">প্রধান সংবাদ</h2>
-            <NewsCard {...featuredNews} featured={true} />
+            <NewsCard 
+              title={featuredNews.title}
+              excerpt={featuredNews.excerpt}
+              image={featuredNews.imageUrl || "/src/assets/economy-news.jpg"}
+              category={featuredNews.category}
+              time={new Date(featuredNews.publishedAt).toLocaleString('bn-BD')}
+              views={featuredNews.views}
+              featured={true} 
+            />
           </div>
         )}
 
@@ -145,7 +106,15 @@ const Politics = () => {
           </h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
             {regularNews.map((article) => (
-              <NewsCard key={article.id} {...article} />
+              <NewsCard 
+                key={article.id}
+                title={article.title}
+                excerpt={article.excerpt}
+                image={article.imageUrl || "/src/assets/economy-news.jpg"}
+                category={article.category}
+                time={new Date(article.publishedAt).toLocaleString('bn-BD')}
+                views={article.views}
+              />
             ))}
           </div>
         </div>

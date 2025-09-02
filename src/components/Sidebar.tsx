@@ -3,9 +3,16 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { useGetTodaysHeadlinesQuery } from "@/store/api/newsApi";
 
 const Sidebar = () => {
-  const trendingNews = [
+  const { data: todaysHeadlines = [] } = useGetTodaysHeadlinesQuery();
+  
+  const trendingNews = todaysHeadlines.length > 0 ? todaysHeadlines.slice(0, 5).map(news => ({
+    title: news.title,
+    views: news.views,
+    time: new Date(news.publishedAt).toLocaleString('bn-BD')
+  })) : [
     {
       title: "করোনা ভ্যাকসিনের নতুন গবেষণা",
       views: 15420,

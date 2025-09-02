@@ -2,7 +2,7 @@ import { Search, Menu, Globe, User, Calendar, ChevronDown, X } from "lucide-reac
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,11 +10,43 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useLogoutMutation, useGetCurrentUserQuery } from "@/store/api/authApi";
+import { useToast } from "@/hooks/use-toast";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
+  const { toast } = useToast();
+
+  // RTK Query hooks
+  const { data: currentUser } = useGetCurrentUserQuery(undefined, {
+    skip: !localStorage.getItem('authToken')
+  });
+  const [logout] = useLogoutMutation();
+
+  const handleLogout = async () => {
+    try {
+      await logout().unwrap();
+      localStorage.removeItem('authToken');
+      toast({
+        title: "লগআউট সফল",
+        description: "আপনি সফলভাবে লগআউট করেছেন।",
+      });
+      navigate('/');
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
+
+  const handleSearch = () => {
+    if (searchQuery.trim()) {
+      navigate(`/search?q=${encodeURIComponent(searchQuery)}`);
+      setIsSearchOpen(false);
+      setSearchQuery('');
+    }
+  };
 
   const navItems = [
     { name: "সর্বশেষ", nameBn: "সর্বশেষ", path: "/" },
@@ -98,27 +130,44 @@ const Header = () => {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-48">
-                    <DropdownMenuItem asChild className="bn-text">
-                      <Link to="/auth">
-                        লগইন
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild className="bn-text">
-                      <Link to="/auth">
-                        নিবন্ধন
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem className="bn-text">
-                      প্রোফাইল
-                    </DropdownMenuItem>
-                    <DropdownMenuItem className="bn-text">
-                      সেটিংস
-                    </DropdownMenuItem>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem className="bn-text">
-                      লগআউট
-                    </DropdownMenuItem>
+                    {currentUser ? (
+                      <>
+                        <DropdownMenuItem className="bn-text">
+                          {currentUser.name}
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem className="bn-text">
+                          প্রোফাইল
+                        </DropdownMenuItem>
+                        <DropdownMenuItem className="bn-text">
+                          সেটিংস
+                        </DropdownMenuItem>
+                        {currentUser.role === 'admin' && (
+                          <DropdownMenuItem asChild className="bn-text">
+                            <Link to="/admin">
+                              অ্যাডমিন প্যানেল
+                            </Link>
+                          </DropdownMenuItem>
+                        )}
+                        <DropdownMenuSeparator />
+                        <DropdownMenuItem onClick={handleLogout} className="bn-text">
+                          লগআউট
+                        </DropdownMenuItem>
+                      </>
+                    ) : (
+                      <>
+                        <DropdownMenuItem asChild className="bn-text">
+                          <Link to="/auth">
+                            লগইন
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuItem asChild className="bn-text">
+                          <Link to="/auth">
+                            নিবন্ধন
+                          </Link>
+                        </DropdownMenuItem>
+                      </>
+                    )}
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
@@ -193,7 +242,7 @@ const Header = () => {
                 />
               </div>
               <div className="flex justify-end">
-                <Button className="bn-text">
+                <Button onClick={handleSearch} className="bn-text">
                   খুঁজুন
                 </Button>
               </div>

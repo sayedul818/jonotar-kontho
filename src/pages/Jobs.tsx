@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Search, MapPin, Clock, Building, Users, DollarSign } from "lucide-react";
 import { useState } from "react";
 import Footer from "@/components/Footer";
+// Note: Jobs would need a separate API, keeping mock data for now
 
 const Jobs = () => {
   const [searchTerm, setSearchTerm] = useState("");

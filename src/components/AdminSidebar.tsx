@@ -20,6 +20,8 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { useGetCurrentUserQuery, useLogoutMutation } from "@/store/api/authApi";
+import { useToast } from "@/hooks/use-toast";
 
 interface AdminSidebarProps {
   isOpen: boolean;
@@ -29,8 +31,26 @@ interface AdminSidebarProps {
 const AdminSidebar = ({ isOpen, onToggle }: AdminSidebarProps) => {
   const location = useLocation();
   const [isNewsOpen, setIsNewsOpen] = useState(false);
+  const { toast } = useToast();
+
+  const { data: currentUser } = useGetCurrentUserQuery();
+  const [logout] = useLogoutMutation();
 
   const isActive = (path: string) => location.pathname === path;
+
+  const handleLogout = async () => {
+    try {
+      await logout().unwrap();
+      localStorage.removeItem('authToken');
+      toast({
+        title: "লগআউট সফল",
+        description: "আপনি সফলভাবে লগআউট করেছেন।",
+      });
+      window.location.href = '/';
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
+  };
 
   const menuItems = [
     {
@@ -71,8 +91,7 @@ const AdminSidebar = ({ isOpen, onToggle }: AdminSidebarProps) => {
       name: "সেটিংস",
       icon: Settings,
       path: "/admin/settings",
-    },
-,
+    }
   ];
 
   return (
@@ -177,16 +196,32 @@ const AdminSidebar = ({ isOpen, onToggle }: AdminSidebarProps) => {
 
         {/* Footer */}
         <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200">
-          <div className="flex items-center">
-            <div className="flex-shrink-0">
-              <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
-                <span className="text-white text-sm font-medium">অ</span>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <div className="flex-shrink-0">
+                <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
+                  <span className="text-white text-sm font-medium">
+                    {currentUser?.name?.charAt(0) || 'অ'}
+                  </span>
+                </div>
+              </div>
+              <div className="ml-3">
+                <p className="text-sm font-medium text-gray-700 bn-text">
+                  {currentUser?.name || 'অ্যাডমিন'}
+                </p>
+                <p className="text-xs text-gray-500">
+                  {currentUser?.email || 'admin@jontorakontho.com'}
+                </p>
               </div>
             </div>
-            <div className="ml-3">
-              <p className="text-sm font-medium text-gray-700 bn-text">অ্যাডমিন</p>
-              <p className="text-xs text-gray-500">admin@jontorakontho.com</p>
-            </div>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={handleLogout}
+              className="text-xs"
+            >
+              লগআউট
+            </Button>
           </div>
         </div>
       </aside>

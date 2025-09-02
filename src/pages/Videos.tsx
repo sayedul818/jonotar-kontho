@@ -6,6 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Search, Play, Clock, Eye, Share2 } from "lucide-react";
 import { useState } from "react";
 import Footer from "@/components/Footer";
+// Note: Videos would need a separate API, keeping mock data for now
 
 const Videos = () => {
   const [searchTerm, setSearchTerm] = useState("");
