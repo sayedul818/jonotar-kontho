@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Footer from "@/components/Footer";
-import { useSearchNewsQuery } from "@/store/api/newsApi";
+import { searchNews } from "@/data/mockData";
 
 const Search = () => {
   const [searchParams] = useSearchParams();
@@ -18,15 +18,7 @@ const Search = () => {
   const [dateFilter, setDateFilter] = useState('all');
   const [sortBy, setSortBy] = useState('relevance');
 
-  const { data: searchResponse, isLoading, error } = useSearchNewsQuery({
-    query: searchQuery,
-    page: 1,
-    limit: 10
-  }, {
-    skip: !searchQuery
-  });
-
-  const searchResults = searchResponse?.articles || [];
+  const searchResults = searchQuery ? searchNews(searchQuery) : [];
 
   const popularSearches = [
     "প্রধানমন্ত্রী",

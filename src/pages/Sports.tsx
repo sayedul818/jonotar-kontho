@@ -6,19 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import Footer from "@/components/Footer";
-import { useGetNewsByCategoryQuery } from "@/store/api/newsApi";
+import { getNewsByCategory } from "@/data/mockData";
 
 const Sports = () => {
-  const { data: newsResponse, isLoading, error } = useGetNewsByCategoryQuery({
-    category: 'sports',
-    page: 1,
-    limit: 10
-  });
-
-  const sportsNews = newsResponse?.articles || [];
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading sports news</div>;
+  const sportsNews = getNewsByCategory('sports');
 
   const liveScores = [
     { team1: "Bangladesh", team2: "Australia", score: "245/6 vs 180/8", status: "Live" },
