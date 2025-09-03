@@ -5,7 +5,7 @@ import NewsCard from "@/components/NewsCard";
 import Sidebar from "@/components/Sidebar";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Footer from "@/components/Footer";
-import { useGetNewsQuery, useGetFeaturedNewsQuery } from "@/store/api/newsApi";
+import { getAllNews, getFeaturedNews } from "@/data/mockData";
 
 // Import images
 import economyImage from "@/assets/economy-news.jpg";
@@ -16,13 +16,8 @@ import healthImage from "@/assets/health-news.jpg";
 import cultureImage from "@/assets/culture-news.jpg";
 
 const Index = () => {
-  const { data: newsResponse, isLoading: newsLoading, error: newsError } = useGetNewsQuery({
-    page: 1,
-    limit: 20
-  });
-  const { data: featuredNews = [], isLoading: featuredLoading } = useGetFeaturedNewsQuery();
-
-  const latestNews = newsResponse?.articles || [];
+  const latestNews = getAllNews();
+  const featuredNews = getFeaturedNews();
 
   const categoryNews = {
     national: latestNews.filter(news => news.category === 'national').slice(0, 4),
@@ -30,9 +25,6 @@ const Index = () => {
     sports: latestNews.filter(news => news.category === 'sports').slice(0, 4),
     entertainment: latestNews.filter(news => news.category === 'entertainment').slice(0, 4)
   };
-
-  if (newsLoading || featuredLoading) return <div>Loading...</div>;
-  if (newsError) return <div>Error loading news</div>;
 
   return (
     <div className="min-h-screen bg-background">
