@@ -183,7 +183,7 @@ const Article = () => {
                   </Badge>
                   <span className="text-sm text-muted-foreground">•</span>
                   <span className="text-sm text-muted-foreground bn-text">
-                    {article.publishDate}
+                    {new Date(article.publishedAt).toLocaleDateString('bn-BD')}
                   </span>
                 </div>
                 
@@ -192,7 +192,7 @@ const Article = () => {
                 </h1>
                 
                 <p className="text-lg text-muted-foreground mb-6 leading-relaxed bn-text">
-                  {article.subtitle}
+                  {article.excerpt}
                 </p>
                 
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
@@ -257,7 +257,7 @@ const Article = () => {
               {/* Featured Image */}
               <div className="px-4 md:px-6 lg:px-8 mb-6">
                 <img
-                  src={article.featuredImage || "/src/assets/economy-news.jpg"}
+                  src={article.imageUrl || "/src/assets/economy-news.jpg"}
                   alt={article.title}
                   className="w-full h-48 md:h-64 lg:h-96 object-cover rounded-lg"
                 />

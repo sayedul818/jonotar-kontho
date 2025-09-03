@@ -6,17 +6,95 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Search, Play, Clock, Eye, Share2 } from "lucide-react";
 import { useState } from "react";
 import Footer from "@/components/Footer";
-import { getVideos } from "@/data/mockData";
-// Note: Videos would need a separate API, using mock data
+// Note: Videos would need a separate API, keeping mock data for now
 
 const Videos = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("সব");
-  const [selectedVideo, setSelectedVideo] = useState<string | null>(null);
+  const [selectedVideo, setSelectedVideo] = useState<number | null>(null);
 
   const categories = ["সব", "সংবাদ", "রাজনীতি", "খেলা", "বিনোদন", "সাক্ষাৎকার", "লাইভ"];
 
-  const videos = getVideos();
+  const videos = [
+    {
+      id: 1,
+      title: "প্রধানমন্ত্রীর জাতির উদ্দেশে ভাষণ | সরাসরি সম্প্রচার",
+      thumbnail: "/src/assets/economy-news.jpg",
+      duration: "৪৫:২৩",
+      views: "২,৫০,০০০",
+      uploadDate: "২ ঘন্টা আগে",
+      category: "রাজনীতি",
+      channel: "জাতীয় টিভি",
+      description: "প্রধানমন্ত্রী শেখ হাসিনার গুরুত্বপূর্ণ ভাষণ যেখানে নতুন উন্নয়ন পরিকল্পনা নিয়ে আলোচনা।",
+      isLive: false,
+      isFeatured: true
+    },
+    {
+      id: 2,
+      title: "বাংলাদেশ বনাম ভারত ক্রিকেট ম্যাচের হাইলাইটস",
+      thumbnail: "/src/assets/sports-news.jpg",
+      duration: "১২:৪৫",
+      views: "৮৫,০০০",
+      uploadDate: "৫ ঘন্টা আগে",
+      category: "খেলা",
+      channel: "স্পোর্টস২৪",
+      description: "আজকের রোমাঞ্চকর ক্রিকেট ম্যাচের সেরা মুহূর্তগুলো।",
+      isLive: false,
+      isFeatured: false
+    },
+    {
+      id: 3,
+      title: "শিক্ষামন্ত্রীর একচ্ছত্র সাক্ষাৎকার",
+      thumbnail: "/src/assets/education-news.jpg",
+      duration: "২৮:১৬",
+      views: "৪২,০০০",
+      uploadDate: "১ দিন আগে",
+      category: "সাক্ষাৎকার",
+      channel: "নিউজ টুডে",
+      description: "শিক্ষা ব্যবস্থায় সংস্কার নিয়ে শিক্ষামন্ত্রীর বিস্তারিত আলোচনা।",
+      isLive: false,
+      isFeatured: false
+    },
+    {
+      id: 4,
+      title: "🔴 লাইভ: ঢাকার ট্রাফিক পরিস্থিতি",
+      thumbnail: "/src/assets/culture-news.jpg",
+      duration: "লাইভ",
+      views: "১,২০০",
+      uploadDate: "এখনই",
+      category: "লাইভ",
+      channel: "ট্রাফিক আপডেট",
+      description: "ঢাকা শহরের বিভিন্ন এলাকার রিয়েল টাইম ট্রাফিক পরিস্থিতি।",
+      isLive: true,
+      isFeatured: false
+    },
+    {
+      id: 5,
+      title: "নতুন বলিউড চলচ্চিত্রের ট্রেইলার রিভিউ",
+      thumbnail: "/src/assets/tech-news.jpg",
+      duration: "৮:৩২",
+      views: "৬৮,০০০",
+      uploadDate: "১ দিন আগে",
+      category: "বিনোদন",
+      channel: "এন্টারটেইনমেন্ট বাংলা",
+      description: "এই সপ্তাহের সেরা বলিউড ট্রেইলার নিয়ে বিস্তারিত আলোচনা।",
+      isLive: false,
+      isFeatured: false
+    },
+    {
+      id: 6,
+      title: "দেশের অর্থনৈতিক পরিস্থিতি নিয়ে বিশেষ প্রতিবেদন",
+      thumbnail: "/src/assets/health-news.jpg",
+      duration: "১৫:২০",
+      views: "৩৫,০০০",
+      uploadDate: "২ দিন আগে",
+      category: "সংবাদ",
+      channel: "ইকোনমি টুডে",
+      description: "বর্তমান অর্থনৈতিক পরিস্থিতি এবং ভবিষ্যৎ সম্ভাবনা নিয়ে বিশ্লেষণ।",
+      isLive: false,
+      isFeatured: false
+    }
+  ];
 
   const filteredVideos = videos.filter(video => 
     (selectedCategory === "সব" || video.category === selectedCategory) &&
@@ -26,7 +104,7 @@ const Videos = () => {
   const featuredVideo = filteredVideos.find(video => video.isFeatured);
   const regularVideos = filteredVideos.filter(video => !video.isFeatured);
 
-  const handleVideoClick = (videoId: string) => {
+  const handleVideoClick = (videoId: number) => {
     setSelectedVideo(videoId);
   };
 

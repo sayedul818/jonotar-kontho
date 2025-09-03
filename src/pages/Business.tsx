@@ -6,10 +6,16 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import Footer from "@/components/Footer";
-import { getNewsByCategory } from "@/data/mockData";
+import { useGetNewsByCategoryQuery } from "@/store/api/newsApi";
 
 const Business = () => {
-  const businessNews = getNewsByCategory('business');
+  const { data: newsResponse, isLoading, error } = useGetNewsByCategoryQuery({
+    category: 'business',
+    page: 1,
+    limit: 10
+  });
+
+  const businessNews = newsResponse?.articles || [];
 
   const stockData = [
     { symbol: "AAPL", price: "$150.25", change: "+2.5%" },
@@ -17,6 +23,9 @@ const Business = () => {
     { symbol: "MSFT", price: "$285.60", change: "-0.3%" },
     { symbol: "TSLA", price: "$180.45", change: "+4.2%" }
   ];
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading business news</div>;
 
   return (
     <div className="min-h-screen bg-background">

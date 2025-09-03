@@ -4,10 +4,19 @@ import Sidebar from "@/components/Sidebar";
 import NewsCard from "@/components/NewsCard";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { getNewsByCategory } from "@/data/mockData";
+import { useGetNewsByCategoryQuery } from "@/store/api/newsApi";
 
 const Technology = () => {
-  const techNews = getNewsByCategory('technology');
+  const { data: newsResponse, isLoading, error } = useGetNewsByCategoryQuery({
+    category: 'technology',
+    page: 1,
+    limit: 10
+  });
+
+  const techNews = newsResponse?.articles || [];
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error loading technology news</div>;
 
   return (
     <div className="min-h-screen bg-gray-50">

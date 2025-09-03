@@ -1,8 +1,8 @@
 import { AlertCircle } from "lucide-react";
-import { getBreakingNews } from "@/data/mockData";
+import { useGetBreakingNewsQuery } from "@/store/api/newsApi";
 
 const BreakingNews = () => {
-  const breakingNews = getBreakingNews();
+  const { data: breakingNews = [] } = useGetBreakingNewsQuery();
 
   return (
     <div className="bg-breaking text-breaking-foreground py-3 overflow-hidden">
@@ -16,7 +16,7 @@ const BreakingNews = () => {
             <div className="breaking-scroll whitespace-nowrap">
               {breakingNews.map((news, index) => (
                 <span key={index} className="mx-8 cursor-pointer hover:underline">
-                  {news}
+                  {typeof news === 'string' ? news : news.title}
                 </span>
               ))}
             </div>

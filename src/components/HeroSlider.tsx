@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { getFeaturedNews } from "@/data/mockData";
+import { useGetFeaturedNewsQuery } from "@/store/api/newsApi";
 
 // Import images
 import economyImage from "@/assets/economy-news.jpg";
@@ -43,11 +43,11 @@ const heroSlides: HeroSlide[] = [
 
 const HeroSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const featuredNews = getFeaturedNews();
+  const { data: featuredNews = [] } = useGetFeaturedNewsQuery();
 
-  // Use mock data if available, otherwise fall back to static data
+  // Use RTK Query data if available, otherwise fall back to mock data
   const slides = featuredNews.length > 0 ? featuredNews.slice(0, 3).map(news => ({
-    id: parseInt(news.id),
+    id: news.id,
     title: news.title,
     description: news.excerpt,
     image: news.imageUrl || economyImage,
