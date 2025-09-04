@@ -1,15 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import type { NewsArticle } from './newsApi';
-import type { User } from './authApi';
-
-export interface Category {
-  id: string;
-  name: string;
-  slug: string;
-  description?: string;
-  articleCount: number;
-  createdAt: string;
-}
+import { 
+  mockDashboardStats, 
+  mockAnalyticsData, 
+  mockUsers, 
+  mockCategories, 
+  mockNewsArticles,
+  type User,
+  type Category,
+  type NewsArticle
+} from '@/data/mockData';
 
 export interface CreateNewsRequest {
   title: string;
@@ -21,7 +20,6 @@ export interface CreateNewsRequest {
   featured: boolean;
   breaking: boolean;
   emergency: boolean;
-  status: 'published' | 'draft';
 }
 
 export interface UpdateNewsRequest extends Partial<CreateNewsRequest> {
@@ -29,20 +27,20 @@ export interface UpdateNewsRequest extends Partial<CreateNewsRequest> {
 }
 
 export interface DashboardStats {
-  totalArticles: number;
-  publishedArticles: number;
-  draftArticles: number;
+  totalNews: number;
+  publishedNews: number;
+  draftNews: number;
   totalViews: number;
-  todayViews: number;
   totalUsers: number;
   activeUsers: number;
-  categories: number;
+  totalCategories: number;
+  breakingNews: number;
 }
 
 export interface AnalyticsData {
-  views: Array<{ date: string; count: number }>;
-  topArticles: Array<{ id: string; title: string; views: number }>;
-  categoryDistribution: Array<{ category: string; count: number }>;
+  dailyViews: Array<{ date: string; views: number }>;
+  topCategories: Array<{ category: string; views: number }>;
+  recentActivity: Array<{ action: string; time: string }>;
 }
 
 export const adminApi = createApi({
@@ -61,146 +59,258 @@ export const adminApi = createApi({
   endpoints: (builder) => ({
     // Dashboard
     getDashboardStats: builder.query<DashboardStats, void>({
-      query: () => '/dashboard/stats',
+      queryFn: async () => {
+        try {
+          await new Promise(resolve => setTimeout(resolve, 300));
+          return { data: mockDashboardStats };
+        } catch (error: any) {
+          return { error: { status: 500, data: { message: error.message } } };
+        }
+      },
       providesTags: ['Dashboard'],
     }),
-    
-    getAnalytics: builder.query<AnalyticsData, { 
-      period: 'week' | 'month' | 'year';
-    }>({
-      query: ({ period }) => `/dashboard/analytics?period=${period}`,
+
+    getAnalytics: builder.query<AnalyticsData, void>({
+      queryFn: async () => {
+        try {
+          await new Promise(resolve => setTimeout(resolve, 300));
+          return { data: mockAnalyticsData };
+        } catch (error: any) {
+          return { error: { status: 500, data: { message: error.message } } };
+        }
+      },
       providesTags: ['Analytics'],
     }),
-    
+
     // News Management
-    getAllNews: builder.query<{
-      articles: NewsArticle[];
-      total: number;
-      page: number;
-    }, {
-      page?: number;
-      limit?: number;
+    getAllNews: builder.query<{ articles: NewsArticle[]; total: number }, { 
+      page?: number; 
+      limit?: number; 
       status?: string;
-      category?: string;
     }>({
-      query: ({ page = 1, limit = 10, status, category }) => ({
-        url: '/news',
-        params: { page, limit, status, category },
-      }),
+      queryFn: async ({ page = 1, limit = 10, status }) => {
+        try {
+          await new Promise(resolve => setTimeout(resolve, 300));
+          let filteredNews = mockNewsArticles;
+          if (status) {
+            filteredNews = mockNewsArticles.filter(article => article.status === status);
+          }
+          const startIndex = (page - 1) * limit;
+          const endIndex = startIndex + limit;
+          
+          return {
+            data: {
+              articles: filteredNews.slice(startIndex, endIndex),
+              total: filteredNews.length
+            }
+          };
+        } catch (error: any) {
+          return { error: { status: 500, data: { message: error.message } } };
+        }
+      },
       providesTags: ['AdminNews'],
     }),
-    
+
     createNews: builder.mutation<NewsArticle, CreateNewsRequest>({
-      query: (newsData) => ({
-        url: '/news',
-        method: 'POST',
-        body: newsData,
-      }),
-      invalidatesTags: ['AdminNews', 'Dashboard'],
+      queryFn: async (newsData) => {
+        try {
+          await new Promise(resolve => setTimeout(resolve, 500));
+          const newArticle: NewsArticle = {
+            id: `${mockNewsArticles.length + 1}`,
+            ...newsData,
+            imageUrl: newsData.imageUrl || '/src/assets/culture-news.jpg',
+            author: 'Current User',
+            publishedAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString(),
+            views: 0,
+            status: 'published'
+          };
+          mockNewsArticles.unshift(newArticle);
+          return { data: newArticle };
+        } catch (error: any) {
+          return { error: { status: 400, data: { message: error.message } } };
+        }
+      },
+      invalidatesTags: ['AdminNews'],
     }),
-    
+
     updateNews: builder.mutation<NewsArticle, UpdateNewsRequest>({
-      query: ({ id, ...newsData }) => ({
-        url: `/news/${id}`,
-        method: 'PUT',
-        body: newsData,
-      }),
-      invalidatesTags: ['AdminNews', 'Dashboard'],
+      queryFn: async ({ id, ...updateData }) => {
+        try {
+          await new Promise(resolve => setTimeout(resolve, 500));
+          const articleIndex = mockNewsArticles.findIndex(article => article.id === id);
+          if (articleIndex === -1) {
+            return { error: { status: 404, data: { message: 'Article not found' } } };
+          }
+          
+          const updatedArticle = {
+            ...mockNewsArticles[articleIndex],
+            ...updateData,
+            updatedAt: new Date().toISOString()
+          };
+          mockNewsArticles[articleIndex] = updatedArticle;
+          return { data: updatedArticle };
+        } catch (error: any) {
+          return { error: { status: 400, data: { message: error.message } } };
+        }
+      },
+      invalidatesTags: ['AdminNews'],
     }),
-    
+
     deleteNews: builder.mutation<void, string>({
-      query: (id) => ({
-        url: `/news/${id}`,
-        method: 'DELETE',
-      }),
-      invalidatesTags: ['AdminNews', 'Dashboard'],
+      queryFn: async (id) => {
+        try {
+          await new Promise(resolve => setTimeout(resolve, 300));
+          const articleIndex = mockNewsArticles.findIndex(article => article.id === id);
+          if (articleIndex === -1) {
+            return { error: { status: 404, data: { message: 'Article not found' } } };
+          }
+          mockNewsArticles.splice(articleIndex, 1);
+          return { data: undefined };
+        } catch (error: any) {
+          return { error: { status: 400, data: { message: error.message } } };
+        }
+      },
+      invalidatesTags: ['AdminNews'],
     }),
-    
-    bulkUpdateNews: builder.mutation<void, {
-      ids: string[];
-      action: 'publish' | 'draft' | 'delete';
+
+    bulkUpdateNews: builder.mutation<void, { 
+      ids: string[]; 
+      updates: Partial<NewsArticle> 
     }>({
-      query: ({ ids, action }) => ({
-        url: '/news/bulk',
-        method: 'POST',
-        body: { ids, action },
-      }),
-      invalidatesTags: ['AdminNews', 'Dashboard'],
+      queryFn: async ({ ids, updates }) => {
+        try {
+          await new Promise(resolve => setTimeout(resolve, 500));
+          ids.forEach(id => {
+            const articleIndex = mockNewsArticles.findIndex(article => article.id === id);
+            if (articleIndex !== -1) {
+              mockNewsArticles[articleIndex] = {
+                ...mockNewsArticles[articleIndex],
+                ...updates,
+                updatedAt: new Date().toISOString()
+              };
+            }
+          });
+          return { data: undefined };
+        } catch (error: any) {
+          return { error: { status: 400, data: { message: error.message } } };
+        }
+      },
+      invalidatesTags: ['AdminNews'],
     }),
-    
-    // Categories
+
+    // Category Management
     getCategories: builder.query<Category[], void>({
-      query: () => '/categories',
+      queryFn: async () => {
+        try {
+          await new Promise(resolve => setTimeout(resolve, 200));
+          return { data: mockCategories };
+        } catch (error: any) {
+          return { error: { status: 500, data: { message: error.message } } };
+        }
+      },
       providesTags: ['Categories'],
     }),
-    
-    createCategory: builder.mutation<Category, {
-      name: string;
-      description?: string;
-    }>({
-      query: (categoryData) => ({
-        url: '/categories',
-        method: 'POST',
-        body: categoryData,
-      }),
+
+    createCategory: builder.mutation<Category, Omit<Category, 'id' | 'createdAt'>>({
+      queryFn: async (categoryData) => {
+        try {
+          await new Promise(resolve => setTimeout(resolve, 300));
+          const newCategory: Category = {
+            id: `${mockCategories.length + 1}`,
+            ...categoryData,
+            createdAt: new Date().toISOString()
+          };
+          mockCategories.push(newCategory);
+          return { data: newCategory };
+        } catch (error: any) {
+          return { error: { status: 400, data: { message: error.message } } };
+        }
+      },
       invalidatesTags: ['Categories'],
     }),
-    
-    updateCategory: builder.mutation<Category, {
-      id: string;
-      name: string;
-      description?: string;
-    }>({
-      query: ({ id, ...categoryData }) => ({
-        url: `/categories/${id}`,
-        method: 'PUT',
-        body: categoryData,
-      }),
+
+    updateCategory: builder.mutation<Category, Partial<Category> & { id: string }>({
+      queryFn: async ({ id, ...updateData }) => {
+        try {
+          await new Promise(resolve => setTimeout(resolve, 300));
+          const categoryIndex = mockCategories.findIndex(category => category.id === id);
+          if (categoryIndex === -1) {
+            return { error: { status: 404, data: { message: 'Category not found' } } };
+          }
+          
+          const updatedCategory = { ...mockCategories[categoryIndex], ...updateData };
+          mockCategories[categoryIndex] = updatedCategory;
+          return { data: updatedCategory };
+        } catch (error: any) {
+          return { error: { status: 400, data: { message: error.message } } };
+        }
+      },
       invalidatesTags: ['Categories'],
     }),
-    
+
     deleteCategory: builder.mutation<void, string>({
-      query: (id) => ({
-        url: `/categories/${id}`,
-        method: 'DELETE',
-      }),
+      queryFn: async (id) => {
+        try {
+          await new Promise(resolve => setTimeout(resolve, 300));
+          const categoryIndex = mockCategories.findIndex(category => category.id === id);
+          if (categoryIndex === -1) {
+            return { error: { status: 404, data: { message: 'Category not found' } } };
+          }
+          mockCategories.splice(categoryIndex, 1);
+          return { data: undefined };
+        } catch (error: any) {
+          return { error: { status: 400, data: { message: error.message } } };
+        }
+      },
       invalidatesTags: ['Categories'],
     }),
-    
+
     // User Management
-    getAllUsers: builder.query<{
-      users: User[];
-      total: number;
-      page: number;
-    }, {
-      page?: number;
-      limit?: number;
-      role?: string;
-    }>({
-      query: ({ page = 1, limit = 10, role }) => ({
-        url: '/users',
-        params: { page, limit, role },
-      }),
+    getAllUsers: builder.query<User[], void>({
+      queryFn: async () => {
+        try {
+          await new Promise(resolve => setTimeout(resolve, 300));
+          return { data: mockUsers };
+        } catch (error: any) {
+          return { error: { status: 500, data: { message: error.message } } };
+        }
+      },
       providesTags: ['Users'],
     }),
-    
-    updateUserRole: builder.mutation<User, {
-      id: string;
-      role: 'admin' | 'editor' | 'user';
-    }>({
-      query: ({ id, role }) => ({
-        url: `/users/${id}/role`,
-        method: 'PUT',
-        body: { role },
-      }),
+
+    updateUserRole: builder.mutation<User, { id: string; role: User['role'] }>({
+      queryFn: async ({ id, role }) => {
+        try {
+          await new Promise(resolve => setTimeout(resolve, 300));
+          const userIndex = mockUsers.findIndex(user => user.id === id);
+          if (userIndex === -1) {
+            return { error: { status: 404, data: { message: 'User not found' } } };
+          }
+          
+          mockUsers[userIndex] = { ...mockUsers[userIndex], role };
+          return { data: mockUsers[userIndex] };
+        } catch (error: any) {
+          return { error: { status: 400, data: { message: error.message } } };
+        }
+      },
       invalidatesTags: ['Users'],
     }),
-    
+
     deleteUser: builder.mutation<void, string>({
-      query: (id) => ({
-        url: `/users/${id}`,
-        method: 'DELETE',
-      }),
+      queryFn: async (id) => {
+        try {
+          await new Promise(resolve => setTimeout(resolve, 300));
+          const userIndex = mockUsers.findIndex(user => user.id === id);
+          if (userIndex === -1) {
+            return { error: { status: 404, data: { message: 'User not found' } } };
+          }
+          mockUsers.splice(userIndex, 1);
+          return { data: undefined };
+        } catch (error: any) {
+          return { error: { status: 400, data: { message: error.message } } };
+        }
+      },
       invalidatesTags: ['Users'],
     }),
   }),

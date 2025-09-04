@@ -206,9 +206,15 @@ const Header = () => {
                   <Button variant="outline" size="sm" className="text-sm bn-text">
                     ই-পেপার
                   </Button>
-                  <Button variant="outline" size="sm" className="text-sm">
-                    Login
-                  </Button>
+                  {currentUser ? (
+                    <Button variant="outline" size="sm" className="text-sm bn-text" onClick={handleLogout}>
+                      লগআউট
+                    </Button>
+                  ) : (
+                    <Button variant="outline" size="sm" className="text-sm bn-text" asChild>
+                      <Link to="/auth">লগইন</Link>
+                    </Button>
+                  )}
                 </div>
               </div>
             </div>
