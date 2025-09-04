@@ -9,7 +9,6 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Footer from "@/components/Footer";
-import { useSearchNewsQuery } from "@/store/api/newsApi";
 
 const Search = () => {
   const [searchParams] = useSearchParams();
@@ -18,15 +17,64 @@ const Search = () => {
   const [dateFilter, setDateFilter] = useState('all');
   const [sortBy, setSortBy] = useState('relevance');
 
-  const { data: searchResponse, isLoading, error } = useSearchNewsQuery({
-    query: searchQuery,
-    page: 1,
-    limit: 10
-  }, {
-    skip: !searchQuery
-  });
-
-  const searchResults = searchResponse?.articles || [];
+  // Mock search results
+  const searchResults = [
+    {
+      id: 1,
+      title: "প্রধানমন্ত্রীর নতুন উন্নয়ন পরিকল্পনা ঘোষণা",
+      excerpt: "দেশের অর্থনৈতিক উন্নয়নে নতুন দিগন্ত উন্মোচন করবে এই পরিকল্পনা। বিশেষজ্ঞরা এটিকে যুগান্তকারী বলে মনে করছেন।",
+      image: "/src/assets/economy-news.jpg",
+      category: "জাতীয়",
+      time: "২ ঘন্টা আগে",
+      views: 15420,
+      author: "আবুল কালাম",
+      relevance: 95
+    },
+    {
+      id: 2,
+      title: "Technology Advancement in Healthcare",
+      excerpt: "Revolutionary changes in medical technology are transforming patient care and treatment outcomes.",
+      image: "/src/assets/tech-news.jpg",
+      category: "Technology",
+      time: "3 hours ago",
+      views: 12850,
+      author: "Dr. Sarah Johnson",
+      relevance: 88
+    },
+    {
+      id: 3,
+      title: "Sports Championship Results",
+      excerpt: "Latest updates from international sports competitions and championship results.",
+      image: "/src/assets/sports-news.jpg",
+      category: "Sports",
+      time: "4 hours ago",
+      views: 9630,
+      author: "Mike Wilson",
+      relevance: 82
+    },
+    {
+      id: 4,
+      title: "Business Market Analysis",
+      excerpt: "Comprehensive analysis of current market trends and business opportunities.",
+      image: "/src/assets/culture-news.jpg",
+      category: "Business",
+      time: "5 hours ago",
+      views: 7220,
+      author: "Lisa Chen",
+      relevance: 75
+    },
+    {
+      id: 5,
+      title: "Educational Policy Changes",
+      excerpt: "New educational policies aim to improve learning outcomes and student engagement.",
+      image: "/src/assets/education-news.jpg",
+      category: "Education",
+      time: "6 hours ago",
+      views: 5840,
+      author: "Ahmad Rahman",
+      relevance: 70
+    }
+  ];
 
   const popularSearches = [
     "প্রধানমন্ত্রী",
@@ -130,13 +178,16 @@ const Search = () => {
                     <CardContent className="p-6">
                       <div className="flex flex-col md:flex-row gap-4">
                         <img 
-                          src={result.imageUrl || "/src/assets/economy-news.jpg"} 
+                          src={result.image} 
                           alt={result.title}
                           className="w-full md:w-48 h-32 object-cover rounded-lg"
                         />
                         <div className="flex-1">
                           <div className="flex items-center space-x-2 mb-2">
                             <Badge variant="secondary">{result.category}</Badge>
+                            <span className="text-xs text-muted-foreground">
+                              {result.relevance}% match
+                            </span>
                           </div>
                           <h3 className="text-xl font-bold mb-2 hover:text-primary transition-colors cursor-pointer">
                             {result.title}
@@ -152,7 +203,7 @@ const Search = () => {
                               </div>
                               <div className="flex items-center space-x-1">
                                 <Clock className="h-4 w-4" />
-                                <span>{new Date(result.publishedAt).toLocaleString('bn-BD')}</span>
+                                <span>{result.time}</span>
                               </div>
                             </div>
                             <div className="flex items-center space-x-1">

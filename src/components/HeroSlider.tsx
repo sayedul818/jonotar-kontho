@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { useGetFeaturedNewsQuery } from "@/store/api/newsApi";
 
 // Import images
 import economyImage from "@/assets/economy-news.jpg";
@@ -43,36 +42,26 @@ const heroSlides: HeroSlide[] = [
 
 const HeroSlider = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const { data: featuredNews = [] } = useGetFeaturedNewsQuery();
-
-  // Use RTK Query data if available, otherwise fall back to mock data
-  const slides = featuredNews.length > 0 ? featuredNews.slice(0, 3).map(news => ({
-    id: news.id,
-    title: news.title,
-    description: news.excerpt,
-    image: news.imageUrl || economyImage,
-    category: news.category
-  })) : heroSlides;
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % slides.length);
+      setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
     }, 5000);
 
     return () => clearInterval(timer);
-  }, [slides.length]);
+  }, []);
 
   const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % slides.length);
+    setCurrentSlide((prev) => (prev + 1) % heroSlides.length);
   };
 
   const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length);
+    setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length);
   };
 
   return (
     <div className="relative h-96 md:h-[300px] overflow-hidden rounded-lg bg-muted">
-      {slides.map((slide, index) => (
+      {heroSlides.map((slide, index) => (
         <div
           key={slide.id}
           className={`absolute inset-0 transition-transform duration-500 ease-in-out ${
@@ -133,7 +122,7 @@ const HeroSlider = () => {
 
       {/* Dots Indicator */}
       <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
-        {slides.map((_, index) => (
+        {heroSlides.map((_, index) => (
           <button
             key={index}
             onClick={() => setCurrentSlide(index)}

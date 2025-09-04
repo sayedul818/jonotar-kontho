@@ -10,7 +10,6 @@ import { Separator } from "@/components/ui/separator";
 import { Textarea } from "@/components/ui/textarea";
 import { Avatar } from "@/components/ui/avatar";
 import Footer from "@/components/Footer";
-import { useGetNewsByIdQuery, useGetFeaturedNewsQuery } from "@/store/api/newsApi";
 
 const Article = () => {
   const { id } = useParams();
@@ -38,12 +37,6 @@ const Article = () => {
       replies: []
     }
   ]);
-
-  // RTK Query hooks
-  const { data: articleData, isLoading: articleLoading, error: articleError } = useGetNewsByIdQuery(id || '', {
-    skip: !id
-  });
-  const { data: relatedArticlesData = [] } = useGetFeaturedNewsQuery();
 
   const reactions = [
     { emoji: "👍", label: "Like", count: 245 },
@@ -183,7 +176,7 @@ const Article = () => {
                   </Badge>
                   <span className="text-sm text-muted-foreground">•</span>
                   <span className="text-sm text-muted-foreground bn-text">
-                    {article.publishDate}
+                    {article.publishDate}, {article.publishTime}
                   </span>
                 </div>
                 
@@ -191,9 +184,11 @@ const Article = () => {
                   {article.title}
                 </h1>
                 
-                <p className="text-lg text-muted-foreground mb-6 leading-relaxed bn-text">
-                  {article.subtitle}
-                </p>
+                {article.subtitle && (
+                  <p className="text-lg text-muted-foreground mb-6 leading-relaxed bn-text">
+                    {article.subtitle}
+                  </p>
+                )}
                 
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
                   <div className="flex flex-wrap items-center gap-4">
@@ -257,7 +252,7 @@ const Article = () => {
               {/* Featured Image */}
               <div className="px-4 md:px-6 lg:px-8 mb-6">
                 <img
-                  src={article.featuredImage || "/src/assets/economy-news.jpg"}
+                  src={article.featuredImage}
                   alt={article.title}
                   className="w-full h-48 md:h-64 lg:h-96 object-cover rounded-lg"
                 />

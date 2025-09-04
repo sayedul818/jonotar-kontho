@@ -6,13 +6,11 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Eye, EyeOff, Mail, Lock, User, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useLoginMutation, useRegisterMutation } from "@/store/api/authApi";
-import { useToast } from "@/hooks/use-toast";
 
 const Auth = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const { toast } = useToast();
+  const [isLoading, setIsLoading] = useState(false);
 
   const [signInData, setSignInData] = useState({
     email: "",
@@ -26,10 +24,6 @@ const Auth = () => {
     confirmPassword: "",
   });
 
-  // RTK Query mutations
-  const [login, { isLoading: loginLoading }] = useLoginMutation();
-  const [register, { isLoading: registerLoading }] = useRegisterMutation();
-
   // const handleSignIn = async (e: React.FormEvent) => {
   //   e.preventDefault();
   //   setIsLoading(true);
@@ -42,63 +36,41 @@ const Auth = () => {
   // };
 const handleSignIn = async (e: React.FormEvent) => {
   e.preventDefault();
-  try {
-    const result = await login(signInData).unwrap();
-    localStorage.setItem('authToken', result.token);
-    
-    toast({
-      title: "লগইন সফল",
-      description: "আপনি সফলভাবে লগইন করেছেন।",
-    });
+  setIsLoading(true);
 
-    // Redirect based on user role
-    if (result.user.role === 'admin') {
-      window.location.href = "/admin";
+  // Simulate API call delay
+  setTimeout(() => {
+    setIsLoading(false);
+
+    // Default admin credentials
+    const defaultAdmin = {
+      email: "admin@example.com",
+      password: "Admin@123",
+    };
+
+    if (
+      signInData.email === defaultAdmin.email &&
+      signInData.password === defaultAdmin.password
+    ) {
+      console.log("Admin logged in!");
+      // Redirect to admin panel
+      window.location.href = "/admin"; // replace with your admin route
     } else {
-      window.location.href = "/";
+      console.log("User logged in!");
+      // Redirect to normal user dashboard
+      window.location.href = "/dashboard"; // replace with your user route
     }
-  } catch (error: any) {
-    toast({
-      title: "লগইন ব্যর্থ",
-      description: error.data?.message || "লগইন করতে সমস্যা হয়েছে।",
-      variant: "destructive",
-    });
-  }
+  }, 2000);
 };
   const handleSignUp = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (signUpData.password !== signUpData.confirmPassword) {
-      toast({
-        title: "পাসওয়ার্ড মিলছে না",
-        description: "পাসওয়ার্ড এবং নিশ্চিতকরণ পাসওয়ার্ড একই হতে হবে।",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    try {
-      const result = await register({
-        name: signUpData.name,
-        email: signUpData.email,
-        password: signUpData.password,
-      }).unwrap();
-      
-      localStorage.setItem('authToken', result.token);
-      
-      toast({
-        title: "নিবন্ধন সফল",
-        description: "আপনি সফলভাবে নিবন্ধন করেছেন।",
-      });
-
-      window.location.href = "/";
-    } catch (error: any) {
-      toast({
-        title: "নিবন্ধন ব্যর্থ",
-        description: error.data?.message || "নিবন্ধন করতে সমস্যা হয়েছে।",
-        variant: "destructive",
-      });
-    }
+    setIsLoading(true);
+    // Simulate API call
+    setTimeout(() => {
+      setIsLoading(false);
+      console.log("Sign up data:", signUpData);
+      // Redirect logic would go here
+    }, 2000);
   };
 
   return (
@@ -185,9 +157,9 @@ const handleSignIn = async (e: React.FormEvent) => {
                   <Button 
                     type="submit" 
                     className="w-full bn-text" 
-                    disabled={loginLoading}
+                    disabled={isLoading}
                   >
-                    {loginLoading ? "লগইন করা হচ্ছে..." : "লগইন করুন"}
+                    {isLoading ? "লগইন করা হচ্ছে..." : "লগইন করুন"}
                   </Button>
                 </form>
               </TabsContent>
@@ -276,9 +248,9 @@ const handleSignIn = async (e: React.FormEvent) => {
                   <Button 
                     type="submit" 
                     className="w-full bn-text" 
-                    disabled={registerLoading}
+                    disabled={isLoading}
                   >
-                    {registerLoading ? "নিবন্ধন করা হচ্ছে..." : "নিবন্ধন করুন"}
+                    {isLoading ? "নিবন্ধন করা হচ্ছে..." : "নিবন্ধন করুন"}
                   </Button>
                 </form>
               </TabsContent>

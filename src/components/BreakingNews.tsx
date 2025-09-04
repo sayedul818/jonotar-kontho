@@ -1,8 +1,12 @@
 import { AlertCircle } from "lucide-react";
-import { useGetBreakingNewsQuery } from "@/store/api/newsApi";
 
 const BreakingNews = () => {
-  const { data: breakingNews = [] } = useGetBreakingNewsQuery();
+  const breakingNews = [
+    "প্রধানমন্ত্রী আজ জাতীয় সংসদে গুরুত্বপূর্ণ ঘোষণা দেবেন",
+    "ঢাকায় নতুন মেট্রোরেল লাইনের উদ্বোধন আগামী মাসে",
+    "বিশ্বকাপ ফুটবলে বাংলাদেশ দলের নতুন কোচ নিয়োগ",
+    "অর্থনৈতিক প্রবৃদ্ধিতে নতুন রেকর্ড অর্জন"
+  ];
 
   return (
     <div className="bg-breaking text-breaking-foreground py-3 overflow-hidden">
@@ -16,7 +20,7 @@ const BreakingNews = () => {
             <div className="breaking-scroll whitespace-nowrap">
               {breakingNews.map((news, index) => (
                 <span key={index} className="mx-8 cursor-pointer hover:underline">
-                  {typeof news === 'string' ? news : news.title}
+                  {news}
                 </span>
               ))}
             </div>

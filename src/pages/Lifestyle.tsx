@@ -6,19 +6,60 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import Footer from "@/components/Footer";
-import { useGetNewsByCategoryQuery } from "@/store/api/newsApi";
 
 const Lifestyle = () => {
-  const { data: newsResponse, isLoading, error } = useGetNewsByCategoryQuery({
-    category: 'lifestyle',
-    page: 1,
-    limit: 10
-  });
-
-  const lifestyleNews = newsResponse?.articles || [];
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading lifestyle news</div>;
+  const lifestyleNews = [
+    {
+      id: 1,
+      title: "Mindful Living: Finding Balance in Modern Life",
+      excerpt: "Discover practical techniques for incorporating mindfulness into your daily routine for better mental health and productivity.",
+      image: "/src/assets/health-news.jpg",
+      category: "Wellness",
+      time: "1 hour ago",
+      views: 18750,
+      author: "Dr. Maya Gupta"
+    },
+    {
+      id: 2,
+      title: "Sustainable Fashion: Style with Purpose",
+      excerpt: "How to build an eco-friendly wardrobe without compromising on style or breaking the bank.",
+      image: "/src/assets/culture-news.jpg",
+      category: "Fashion",
+      time: "2 hours ago",
+      views: 22430,
+      author: "Sophia Chen"
+    },
+    {
+      id: 3,
+      title: "Home Gardening Revolution: Urban Farming Tips",
+      excerpt: "Transform your living space into a green oasis with these expert tips for successful urban gardening.",
+      image: "/src/assets/economy-news.jpg",
+      category: "Home & Garden",
+      time: "3 hours ago",
+      views: 16890,
+      author: "Ahmed Rahman"
+    },
+    {
+      id: 4,
+      title: "Digital Detox: Reclaiming Your Time",
+      excerpt: "Strategies for reducing screen time and reconnecting with the physical world around you.",
+      image: "/src/assets/tech-news.jpg",
+      category: "Digital Wellness",
+      time: "4 hours ago",
+      views: 14620,
+      author: "Lisa Johnson"
+    },
+    {
+      id: 5,
+      title: "Culinary Adventures: Exploring Global Cuisines",
+      excerpt: "A journey through international flavors you can recreate in your own kitchen.",
+      image: "/src/assets/sports-news.jpg",
+      category: "Food & Travel",
+      time: "5 hours ago",
+      views: 19340,
+      author: "Marco Rodriguez"
+    }
+  ];
 
   const featuredTips = [
     {
@@ -84,17 +125,15 @@ const Lifestyle = () => {
             {/* Featured Story */}
             <section className="mb-8">
               <h2 className="news-headline mb-6 text-primary">Lifestyle Feature</h2>
-              {lifestyleNews.length > 0 && (
-                <NewsCard
-                  title={lifestyleNews[0].title}
-                  excerpt={lifestyleNews[0].excerpt}
-                  image={lifestyleNews[0].imageUrl || "/src/assets/health-news.jpg"}
-                  category={lifestyleNews[0].category}
-                  time={new Date(lifestyleNews[0].publishedAt).toLocaleString('bn-BD')}
-                  views={lifestyleNews[0].views}
-                  featured={true}
-                />
-              )}
+              <NewsCard
+                title={lifestyleNews[0].title}
+                excerpt={lifestyleNews[0].excerpt}
+                image={lifestyleNews[0].image}
+                category={lifestyleNews[0].category}
+                time={lifestyleNews[0].time}
+                views={lifestyleNews[0].views}
+                featured={true}
+              />
             </section>
 
             {/* News Grid */}
@@ -104,7 +143,7 @@ const Lifestyle = () => {
                 {lifestyleNews.slice(1).map((news) => (
                   <div key={news.id} className="border border-border rounded-lg p-4 hover-lift">
                     <img 
-                      src={news.imageUrl || "/src/assets/health-news.jpg"} 
+                      src={news.image} 
                       alt={news.title}
                       className="w-full h-48 object-cover rounded-lg mb-4"
                     />
@@ -125,7 +164,7 @@ const Lifestyle = () => {
                         </div>
                         <div className="flex items-center space-x-1">
                           <Clock className="h-4 w-4" />
-                          <span>{new Date(news.publishedAt).toLocaleString('bn-BD')}</span>
+                          <span>{news.time}</span>
                         </div>
                       </div>
                       <div className="flex items-center space-x-1">

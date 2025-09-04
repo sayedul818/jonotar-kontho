@@ -6,19 +6,60 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import Footer from "@/components/Footer";
-import { useGetNewsByCategoryQuery } from "@/store/api/newsApi";
 
 const Sports = () => {
-  const { data: newsResponse, isLoading, error } = useGetNewsByCategoryQuery({
-    category: 'sports',
-    page: 1,
-    limit: 10
-  });
-
-  const sportsNews = newsResponse?.articles || [];
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading sports news</div>;
+  const sportsNews = [
+    {
+      id: 1,
+      title: "Bangladesh Cricket Team's Historic Victory",
+      excerpt: "The Tigers secure a memorable win against the world champions in a thrilling match that kept fans on the edge of their seats.",
+      image: "/src/assets/sports-news.jpg",
+      category: "Cricket",
+      time: "15 minutes ago",
+      views: 45620,
+      author: "Rafiq Ahmed"
+    },
+    {
+      id: 2,
+      title: "Football World Cup Qualifiers Heat Up",
+      excerpt: "Intense competition continues as national teams battle for coveted spots in next year's championship tournament.",
+      image: "/src/assets/culture-news.jpg",
+      category: "Football",
+      time: "1 hour ago",
+      views: 38750,
+      author: "Karim Hassan"
+    },
+    {
+      id: 3,
+      title: "Olympic Preparations Reach Final Stage",
+      excerpt: "Athletes from around the globe are making final preparations for the upcoming Olympic Games in Paris.",
+      image: "/src/assets/health-news.jpg",
+      category: "Olympics",
+      time: "2 hours ago",
+      views: 28940,
+      author: "Fatima Khan"
+    },
+    {
+      id: 4,
+      title: "Tennis Championship Produces Stunning Upsets",
+      excerpt: "Young talents emerge victorious against seasoned champions in unexpected tournament results.",
+      image: "/src/assets/tech-news.jpg",
+      category: "Tennis",
+      time: "3 hours ago",
+      views: 15670,
+      author: "Sohel Rahman"
+    },
+    {
+      id: 5,
+      title: "Basketball League Season Reaches Climax",
+      excerpt: "Teams compete fiercely for playoff positions as the regular season draws to a close.",
+      image: "/src/assets/economy-news.jpg",
+      category: "Basketball",
+      time: "4 hours ago",
+      views: 12450,
+      author: "Nasir Uddin"
+    }
+  ];
 
   const liveScores = [
     { team1: "Bangladesh", team2: "Australia", score: "245/6 vs 180/8", status: "Live" },
@@ -73,17 +114,15 @@ const Sports = () => {
             {/* Featured Story */}
             <section className="mb-8">
               <h2 className="news-headline mb-6 text-primary">Highlight of the Day</h2>
-              {sportsNews.length > 0 && (
-                <NewsCard
-                  title={sportsNews[0].title}
-                  excerpt={sportsNews[0].excerpt}
-                  image={sportsNews[0].imageUrl || "/src/assets/sports-news.jpg"}
-                  category={sportsNews[0].category}
-                  time={new Date(sportsNews[0].publishedAt).toLocaleString('bn-BD')}
-                  views={sportsNews[0].views}
-                  featured={true}
-                />
-              )}
+              <NewsCard
+                title={sportsNews[0].title}
+                excerpt={sportsNews[0].excerpt}
+                image={sportsNews[0].image}
+                category={sportsNews[0].category}
+                time={sportsNews[0].time}
+                views={sportsNews[0].views}
+                featured={true}
+              />
             </section>
 
             {/* News Grid */}
@@ -93,7 +132,7 @@ const Sports = () => {
                 {sportsNews.slice(1).map((news) => (
                   <div key={news.id} className="border border-border rounded-lg p-4 hover-lift">
                     <img 
-                      src={news.imageUrl || "/src/assets/sports-news.jpg"} 
+                      src={news.image} 
                       alt={news.title}
                       className="w-full h-48 object-cover rounded-lg mb-4"
                     />
@@ -114,7 +153,7 @@ const Sports = () => {
                         </div>
                         <div className="flex items-center space-x-1">
                           <Clock className="h-4 w-4" />
-                          <span>{new Date(news.publishedAt).toLocaleString('bn-BD')}</span>
+                          <span>{news.time}</span>
                         </div>
                       </div>
                       <div className="flex items-center space-x-1">

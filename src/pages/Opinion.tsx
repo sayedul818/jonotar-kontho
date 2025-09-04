@@ -7,19 +7,54 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Footer from "@/components/Footer";
-import { useGetNewsByCategoryQuery } from "@/store/api/newsApi";
 
 const Opinion = () => {
-  const { data: newsResponse, isLoading, error } = useGetNewsByCategoryQuery({
-    category: 'opinion',
-    page: 1,
-    limit: 10
-  });
-
-  const opinionArticles = newsResponse?.articles || [];
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading opinion articles</div>;
+  const opinionArticles = [
+    {
+      id: 1,
+      title: "The Future of Democracy in Digital Age",
+      excerpt: "How technology is reshaping political discourse and citizen engagement in the modern world.",
+      image: "/src/assets/culture-news.jpg",
+      category: "Politics",
+      time: "2 hours ago",
+      views: 15420,
+      author: "Dr. Sarah Mitchell",
+      authorImage: "/src/assets/tech-news.jpg"
+    },
+    {
+      id: 2,
+      title: "Climate Action: Beyond Government Policies",
+      excerpt: "Individual responsibility and corporate accountability in addressing environmental challenges.",
+      image: "/src/assets/economy-news.jpg",
+      category: "Environment",
+      time: "4 hours ago",
+      views: 12650,
+      author: "Prof. Ahmed Hassan",
+      authorImage: "/src/assets/health-news.jpg"
+    },
+    {
+      id: 3,
+      title: "Education Reform: Preparing for Tomorrow",
+      excerpt: "Transforming educational systems to meet the demands of an evolving job market.",
+      image: "/src/assets/education-news.jpg",
+      category: "Education",
+      time: "6 hours ago",
+      views: 9840,
+      author: "Maria Rodriguez",
+      authorImage: "/src/assets/sports-news.jpg"
+    },
+    {
+      id: 4,
+      title: "Economic Inequality in the Post-Pandemic Era",
+      excerpt: "Analyzing the widening gap between different socioeconomic groups and potential solutions.",
+      image: "/src/assets/tech-news.jpg",
+      category: "Economics",
+      time: "8 hours ago",
+      views: 8320,
+      author: "James Wilson",
+      authorImage: "/src/assets/culture-news.jpg"
+    }
+  ];
 
   const featuredEditorial = {
     title: "Bangladesh's Digital Transformation: Opportunities and Challenges",
@@ -107,7 +142,7 @@ const Opinion = () => {
                     <CardContent className="p-6">
                       <div className="flex flex-col md:flex-row gap-4">
                         <img 
-                          src={article.imageUrl || "/src/assets/culture-news.jpg"} 
+                          src={article.image} 
                           alt={article.title}
                           className="w-full md:w-48 h-32 object-cover rounded-lg"
                         />
@@ -125,13 +160,14 @@ const Opinion = () => {
                             <div className="flex items-center space-x-4">
                               <div className="flex items-center space-x-2">
                                 <Avatar className="h-6 w-6">
+                                  <AvatarImage src={article.authorImage} />
                                   <AvatarFallback>{article.author.charAt(0)}</AvatarFallback>
                                 </Avatar>
                                 <span className="font-medium">{article.author}</span>
                               </div>
                               <div className="flex items-center space-x-1">
                                 <Clock className="h-4 w-4" />
-                                <span>{new Date(article.publishedAt).toLocaleString('bn-BD')}</span>
+                                <span>{article.time}</span>
                               </div>
                             </div>
                             <div className="flex items-center space-x-1">

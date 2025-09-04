@@ -6,16 +6,60 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import Footer from "@/components/Footer";
-import { useGetNewsByCategoryQuery } from "@/store/api/newsApi";
 
 const Business = () => {
-  const { data: newsResponse, isLoading, error } = useGetNewsByCategoryQuery({
-    category: 'business',
-    page: 1,
-    limit: 10
-  });
-
-  const businessNews = newsResponse?.articles || [];
+  const businessNews = [
+    {
+      id: 1,
+      title: "Tech Giants Report Record Quarterly Earnings",
+      excerpt: "Major technology companies exceed market expectations with strong revenue growth driven by AI innovations and cloud services.",
+      image: "/src/assets/tech-news.jpg",
+      category: "Technology",
+      time: "30 minutes ago",
+      views: 32450,
+      author: "David Kim"
+    },
+    {
+      id: 2,
+      title: "Green Energy Investments Surge to New Heights",
+      excerpt: "Renewable energy sector attracts unprecedented funding as investors shift focus towards sustainable solutions.",
+      image: "/src/assets/economy-news.jpg",
+      category: "Energy",
+      time: "1 hour ago",
+      views: 28760,
+      author: "Lisa Chen"
+    },
+    {
+      id: 3,
+      title: "Startup Ecosystem Shows Remarkable Growth",
+      excerpt: "Emerging companies secure significant venture capital funding despite challenging market conditions.",
+      image: "/src/assets/culture-news.jpg",
+      category: "Startups",
+      time: "2 hours ago",
+      views: 15840,
+      author: "Robert Martinez"
+    },
+    {
+      id: 4,
+      title: "Banking Sector Embraces Digital Transformation",
+      excerpt: "Financial institutions accelerate their digital initiatives to meet evolving customer expectations.",
+      image: "/src/assets/health-news.jpg",
+      category: "Finance",
+      time: "3 hours ago",
+      views: 12630,
+      author: "Emma Thompson"
+    },
+    {
+      id: 5,
+      title: "Global Supply Chain Shows Signs of Recovery",
+      excerpt: "International trade routes stabilize as logistics companies implement innovative solutions.",
+      image: "/src/assets/sports-news.jpg",
+      category: "Trade",
+      time: "4 hours ago",
+      views: 9870,
+      author: "Carlos Rodriguez"
+    }
+  ];
 
   const stockData = [
     { symbol: "AAPL", price: "$150.25", change: "+2.5%" },
@@ -23,9 +67,6 @@ const Business = () => {
     { symbol: "MSFT", price: "$285.60", change: "-0.3%" },
     { symbol: "TSLA", price: "$180.45", change: "+4.2%" }
   ];
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading business news</div>;
 
   return (
     <div className="min-h-screen bg-background">
@@ -67,17 +108,15 @@ const Business = () => {
             {/* Featured Story */}
             <section className="mb-8">
               <h2 className="news-headline mb-6 text-primary">Featured Business Story</h2>
-              {businessNews.length > 0 && (
-                <NewsCard
-                  title={businessNews[0].title}
-                  excerpt={businessNews[0].excerpt}
-                  image={businessNews[0].imageUrl || "/src/assets/tech-news.jpg"}
-                  category={businessNews[0].category}
-                  time={new Date(businessNews[0].publishedAt).toLocaleString('bn-BD')}
-                  views={businessNews[0].views}
-                  featured={true}
-                />
-              )}
+              <NewsCard
+                title={businessNews[0].title}
+                excerpt={businessNews[0].excerpt}
+                image={businessNews[0].image}
+                category={businessNews[0].category}
+                time={businessNews[0].time}
+                views={businessNews[0].views}
+                featured={true}
+              />
             </section>
 
             {/* News Grid */}
@@ -87,7 +126,7 @@ const Business = () => {
                 {businessNews.slice(1).map((news) => (
                   <div key={news.id} className="border border-border rounded-lg p-4 hover-lift">
                     <img 
-                      src={news.imageUrl || "/src/assets/tech-news.jpg"} 
+                      src={news.image} 
                       alt={news.title}
                       className="w-full h-48 object-cover rounded-lg mb-4"
                     />
@@ -108,7 +147,7 @@ const Business = () => {
                         </div>
                         <div className="flex items-center space-x-1">
                           <Clock className="h-4 w-4" />
-                          <span>{new Date(news.publishedAt).toLocaleString('bn-BD')}</span>
+                          <span>{news.time}</span>
                         </div>
                       </div>
                       <div className="flex items-center space-x-1">

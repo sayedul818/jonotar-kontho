@@ -5,19 +5,60 @@ import NewsCard from "@/components/NewsCard";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Footer from "@/components/Footer";
-import { useGetNewsByCategoryQuery } from "@/store/api/newsApi";
 
 const Entertainment = () => {
-  const { data: newsResponse, isLoading, error } = useGetNewsByCategoryQuery({
-    category: 'entertainment',
-    page: 1,
-    limit: 10
-  });
-
-  const entertainmentNews = newsResponse?.articles || [];
-
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error loading entertainment news</div>;
+  const entertainmentNews = [
+    {
+      id: 1,
+      title: "Bollywood Blockbuster Breaks Box Office Records",
+      excerpt: "The latest superhero film has shattered previous records, earning unprecedented opening weekend collections worldwide.",
+      image: "/src/assets/culture-news.jpg",
+      category: "Movies",
+      time: "20 minutes ago",
+      views: 42350,
+      author: "Priya Sharma"
+    },
+    {
+      id: 2,
+      title: "International Film Festival Announces Winners",
+      excerpt: "Prestigious awards ceremony recognizes outstanding achievements in cinema from around the globe.",
+      image: "/src/assets/sports-news.jpg",
+      category: "Awards",
+      time: "1 hour ago",
+      views: 28940,
+      author: "David Wilson"
+    },
+    {
+      id: 3,
+      title: "Popular TV Series Gets Renewed for New Season",
+      excerpt: "Fans celebrate as their favorite drama series is confirmed for another exciting season with returning cast.",
+      image: "/src/assets/tech-news.jpg",
+      category: "Television",
+      time: "2 hours ago",
+      views: 19670,
+      author: "Sarah Ahmed"
+    },
+    {
+      id: 4,
+      title: "Music Festival Lineup Announced",
+      excerpt: "Major artists and emerging talents set to perform at this year's most anticipated music festival.",
+      image: "/src/assets/health-news.jpg",
+      category: "Music",
+      time: "3 hours ago",
+      views: 15280,
+      author: "Alex Johnson"
+    },
+    {
+      id: 5,
+      title: "Celebrity Couple Announces Engagement",
+      excerpt: "Beloved entertainment industry personalities share their joyful news with fans worldwide.",
+      image: "/src/assets/economy-news.jpg",
+      category: "Celebrity",
+      time: "4 hours ago",
+      views: 31750,
+      author: "Maya Patel"
+    }
+  ];
 
   return (
     <div className="min-h-screen bg-background">
@@ -41,17 +82,15 @@ const Entertainment = () => {
             {/* Featured Story */}
             <section className="mb-8">
               <h2 className="news-headline mb-6 text-primary">Entertainment Spotlight</h2>
-              {entertainmentNews.length > 0 && (
-                <NewsCard
-                  title={entertainmentNews[0].title}
-                  excerpt={entertainmentNews[0].excerpt}
-                  image={entertainmentNews[0].imageUrl || "/src/assets/culture-news.jpg"}
-                  category={entertainmentNews[0].category}
-                  time={new Date(entertainmentNews[0].publishedAt).toLocaleString('bn-BD')}
-                  views={entertainmentNews[0].views}
-                  featured={true}
-                />
-              )}
+              <NewsCard
+                title={entertainmentNews[0].title}
+                excerpt={entertainmentNews[0].excerpt}
+                image={entertainmentNews[0].image}
+                category={entertainmentNews[0].category}
+                time={entertainmentNews[0].time}
+                views={entertainmentNews[0].views}
+                featured={true}
+              />
             </section>
 
             {/* News Grid */}
@@ -61,7 +100,7 @@ const Entertainment = () => {
                 {entertainmentNews.slice(1).map((news) => (
                   <div key={news.id} className="border border-border rounded-lg p-4 hover-lift">
                     <img 
-                      src={news.imageUrl || "/src/assets/culture-news.jpg"} 
+                      src={news.image} 
                       alt={news.title}
                       className="w-full h-48 object-cover rounded-lg mb-4"
                     />
@@ -82,7 +121,7 @@ const Entertainment = () => {
                         </div>
                         <div className="flex items-center space-x-1">
                           <Clock className="h-4 w-4" />
-                          <span>{new Date(news.publishedAt).toLocaleString('bn-BD')}</span>
+                          <span>{news.time}</span>
                         </div>
                       </div>
                       <div className="flex items-center space-x-1">
